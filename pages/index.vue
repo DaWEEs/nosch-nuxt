@@ -89,6 +89,9 @@ export default {
 }*/
 .container{
   max-width: 70%;
+  padding: 12px;
+  margin-right: auto;
+  margin-left: auto;
 }
 #linknav{
   margin-top:30px;

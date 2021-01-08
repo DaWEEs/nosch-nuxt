@@ -38,6 +38,7 @@
   padding: 10px 10px;
   width: 75%;
   margin: 0 auto;
+  margin-top:30px;
   font-size: 18px;
   position: sticky;
   top: 0px;
