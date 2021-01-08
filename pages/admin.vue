@@ -22,7 +22,6 @@
             :type="show1 ? 'text' : 'password'"
             :counter="10"
             label="Heslo"
-            counter
             name="input-10-1"
             @click:append="show1 = !show1"
           ></v-text-field>
