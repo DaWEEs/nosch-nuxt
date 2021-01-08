@@ -17,7 +17,7 @@
 export default {}
 </script>
 
-<style scoped>
+<style>
 .intro
 {
   height:600px;
