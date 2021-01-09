@@ -47,7 +47,6 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/auth-next',
-    "@nuxtjs/vuetify",
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
