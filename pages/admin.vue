@@ -1,16 +1,20 @@
 <template>
-<div class="login" style="margin:0 auto; width:100%;">
-  <h3>Přihlášení do admin sekce</h3>
-  <v-form @submit.prevent="pressed">
-    <v-container fill-height>
-      <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
+<div class="login" style="height:100vh">
+  
+  <v-form @submit.prevent="pressed" style="height:100vh"  >
+    <v-card
+  elevation="3"
+  outlined
+  max-width="500"
+  style="margin:0 auto;position:relative;top:50px; left:0;"
+    >
+      <v-card-title style="justify-content:center">
+        <span>Přihlášení do admin sekce</span>
+      </v-card-title>
+      <v-card-text>
           <v-text-field
             v-model="email"
-            :rules="[emailRules]"
+            :emailRules="[emailRules]"
             label="E-mail"
             required
           ></v-text-field>
@@ -25,16 +29,17 @@
             name="input-10-1"
             @click:append="show1 = !show1"
           ></v-text-field>
-          <v-btn
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
           depressed
           elevation="5"
           large
           block
           type="submit"
         >Přihlásit</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+      </v-card-actions>
+    </v-card>
   </v-form>
   <div class="error" v-if="error">{{error.message}}</div>
 </div>
