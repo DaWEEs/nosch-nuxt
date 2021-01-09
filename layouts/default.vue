@@ -24,7 +24,7 @@ export default {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           // Uživatel je přihlášen
-          console.log('signed in')
+          //console.log('signed in')
           firebase
             .auth()
             .currentUser.getIdToken(true)
@@ -34,7 +34,7 @@ export default {
           Cookies.remove('access_token')
           // Žádný uživatel není přihlášen
           this.loggedIn = false
-          console.log('signed out', this.loggedIn)
+          //console.log('signed out', this.loggedIn)
         }
       })
     },

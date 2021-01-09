@@ -1,5 +1,6 @@
 <template>
   <div id="linknav">
+    <div class="container">
     <NuxtLink to="/">
       <img src="@/assets/logo.png">
     </NuxtLink>
@@ -15,7 +16,7 @@
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/about">
+        <NuxtLink to="/verejnost">
           Veřejnost
         </NuxtLink>
       </li>
@@ -30,17 +31,17 @@
         </NuxtLink>
       </li>
     </ul>
+    </div>
   </div>
 </template>
 
 <style>
 #linknav {
   padding: 10px 10px;
-  width: 75%;
+  width: 100%;
   margin: 0 auto;
-  margin-top:30px;
   font-size: 18px;
-  position: sticky;
+  position: relative;
   top: 0px;
   background-color: #ffffff;
   z-index:9999;

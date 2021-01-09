@@ -1,15 +1,9 @@
 <template>
   <section class="intro" id="intro">
-    <div class="fading" />
     <figure>
       <video loop autoplay preload muted src="/nosch.webm" alt=""></video>
       <img src="/slider_1.jpg" alt="" />
     </figure>
-    <div class="container">
-      <div class="intro-text" id="intro-cont">
-        <h1>S námi jste vždy o pár kroků napřed!</h1>
-      </div>
-    </div>
   </section>
 </template>
 
@@ -20,28 +14,29 @@ export default {}
 <style>
 .intro
 {
-  height:600px;
     width:100%;
     display:block;
-    top:0;
+    position:relative;
+    top:0px;
     left:0;
-    
-}
-
-.fading{
-  background-color: rgba(0,0,0,0.6);
-  min-width:100%;
-  
-  z-index: 2;
+    height:73vh;
 }
 
 figure{
-  height:40%;
+  height:100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.intro::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 figure img{
     width:100%;
-    height: 600px;
+    height: 73vh;
+    float: right;
     position: absolute;
     top:0;
     left:0;
@@ -56,17 +51,17 @@ figure img{
 
 figure video{
     width:100%;
-    height: 600px;
+    height: 73vh;
+    float: right;
     position: absolute;
     top:0;
     left:0;
-    z-index: -2;
+    z-index: -1;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-    z-index: 3;
     object-fit: cover;
 }
 

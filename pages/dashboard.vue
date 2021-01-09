@@ -41,6 +41,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth'
 import { getUserFromCookie, getUserFromSession } from '@/helpers/cookie.js'
+import Vuetify from 'vuetify/lib'
+
 export default {
   data(){
     return{
