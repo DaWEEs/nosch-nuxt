@@ -23,6 +23,7 @@
     "tiptap-vuetify": "^2.24.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@nuxtjs/vuetify": "^1.11.2",
+    "vuetify-loader": "^1.4.2"
   }
 }
