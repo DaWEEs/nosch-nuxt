@@ -1,6 +1,7 @@
 # nuxt
 
 ## Build Setup
+# postaveno na node verzi 12.18.1
 
 ```bash
 # install dependencies

@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 .container-nopadding{
-  padding:0 !important;
+  padding:0 12px !important;
 }
 .theme--light.v-icon{
     color: rgba(0, 0, 0, 1);

@@ -1,12 +1,8 @@
 <template>
-  <ClientOnly>
+  <div>
     <!-- Use the component in the right place of the template -->
-    <tiptap-vuetify v-model="content" :extensions="extensions"/>
-
-    <template #placeholder>
-      Loading...
-    </template>
-  </ClientOnly>
+    <tiptap-vuetify v-model="content" :extensions="extensions" />
+  </div>
 </template>
 
 <script>
@@ -61,10 +57,7 @@ export default {
       HardBreak
     ],
     // starting editor's content
-    content: `
-      <h1>Yay Headlines!</h1>
-      <p>All these <strong>cool tags</strong> are working now.</p>
-    `
-  })
+    content: '<p>Zde můžete psát text.</p>',
+  }),
 }
 </script>

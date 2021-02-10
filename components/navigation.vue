@@ -37,7 +37,6 @@
 
 <style>
 #linknav {
-  padding: 10px 10px;
   width: 100%;
   margin: 0 auto;
   font-size: 18px;
@@ -45,6 +44,7 @@
   top: 0px;
   background-color: #ffffff;
   z-index:9999;
+  height:100%;
 }
 
 @media screen and (max-width: 1183px){
@@ -56,14 +56,20 @@
 
 #linknav ul{
   display:flex;
-  float:right;
-  padding: 0;
-  padding-top:18px;
+  padding: 10px 0;
+  width: 100%;
+  background-color: #fff;
 }
 
 #linknav ul li{
   list-style: none;
   margin: 0 15px;
+  flex-direction: row;
+}
+
+#linknav ul li:first-child{
+  list-style: none;
+  margin: 0 15px 0 0;
   flex-direction: row;
 }
 
