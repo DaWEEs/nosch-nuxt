@@ -11,6 +11,16 @@
     >
       <v-toolbar-title>CMS ADMIN PANEL</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn
+            fab
+            small
+            style="margin-right: 10px;"
+            @click="refresh()"
+            >
+            <v-icon>
+              mdi-refresh
+            </v-icon>
+      </v-btn>
       <v-btn right v-on:click="logout()">
           Odhlásit se
       </v-btn>
@@ -141,6 +151,10 @@ export default {
           this.$router.replace({ name: 'index' })
         })
     },
+
+    refresh() {
+        this.$nuxt.refresh()
+    }
   }
 }
 </script>
