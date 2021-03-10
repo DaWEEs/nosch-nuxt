@@ -4,16 +4,6 @@
       <thead>
         <tr>
           <th class="text-left">
-            <v-btn
-            fab
-            small
-            style="margin-right: 10px;"
-            @click="refresh"
-            >
-            <v-icon>
-              mdi-refresh
-            </v-icon>
-          </v-btn>
             Jméno aktuality
           </th>
           <th class="text-left">
@@ -41,23 +31,15 @@ export default {
     prispevky: [],
   }),
 
-  async beforeMount(){
+  async fetch(){
       let i = 0;
+      this.prispevky = [];
       const result = await db.collection('prispevky').get();
       result.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-        this.prispevky[i] = doc.data();
-        //prispevky.push(doc.data());
-        i++;
+        //console.log(doc.id, '=>', doc.data());
+        this.prispevky.push(doc.data());
       });
-      console.log(this.prispevky);
   },
-
-  methods:{
-    refresh() {
-        this.$nuxt.refresh()
-      }
-  }
 }
 </script>
 
