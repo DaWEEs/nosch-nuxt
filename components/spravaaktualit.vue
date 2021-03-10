@@ -7,14 +7,30 @@
             Jméno aktuality
           </th>
           <th class="text-left">
+            URL
+          </th>
+          <th class="text-left">
 
           </th>
         </tr>
       </thead>
       <tbody>
           <tr v-for="prispevek in prispevky" :key="prispevek.title">
-            <td>{{ prispevek.title }}</td>
-            <td>{{ prispevek.title }}</td>
+            <td style="text-align:center"><Nuxt-link :to="`/prispevky/${prispevek.url}`" target="_blank">{{ prispevek.title }}</Nuxt-link></td>
+            <td style="text-align:center">/prispevky/{{ prispevek.url }}</td>
+            <td style="text-align:center">
+              <Nuxt-link :to="`/`">
+              <v-btn
+              color="#64B5F6"
+              elevation="2"
+              >Upravit</v-btn>
+              </Nuxt-link>
+              <v-btn
+              color="#64B5F6"
+              elevation="2"
+              @click="del(prispevek.url)"
+              >Smazat</v-btn>
+          </td>
           </tr>
       </tbody>
     </template>
@@ -40,6 +56,14 @@ export default {
         this.prispevky.push(doc.data());
       });
   },
+
+  methods:{
+      async del(url){
+        const sma = await db.collection('prispevky').doc(url);
+        sma.delete();
+        this.$nuxt.refresh()
+      }
+  }
 }
 </script>
 
