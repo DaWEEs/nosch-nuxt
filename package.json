@@ -19,11 +19,16 @@
     "@nuxtjs/pwa": "^3.0.2",
     "cookieparser": "^0.1.0",
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
     "firebase": "^8.2.1",
+    "firebase-admin": "^9.4.2",
+    "fs": "^0.0.1-security",
     "js-cookie": "^2.2.1",
     "jwt-parser": "^2.0.0",
+    "net": "^1.0.2",
     "nuxt": "^2.14.6",
-    "tiptap-vuetify": "^2.24.0"
+    "tiptap-vuetify": "^2.24.0",
+    "tls": "^0.0.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2",

@@ -20,9 +20,9 @@
     
     <h1>Aktuality</h1>
     <ul>
-      <li v-for="prispevek in prispevky.slice(0,3)" :key="prispevek.titul">
-        <h1>{{prispevek.titul}}</h1>
-        <p>{{prispevek.popis}}</p>
+      <li v-for="prispevek in prispevky.slice(0,3)" :key="prispevek.title">
+        <h1><Nuxt-link :to="`/prispevky/${prispevek.url}`">{{prispevek.title}}</Nuxt-link></h1>
+        <p>{{prispevek.text}}</p>
       </li>
     </ul>
     </div>

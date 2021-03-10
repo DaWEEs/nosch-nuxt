@@ -71,7 +71,7 @@ export default {
   asyncData({ req, redirect }){
     const user = getUserFromCookie(req)
       if(user){
-        redirect('/dashboard')
+        redirect('/admin/dashboard')
       }
   },
   methods:
@@ -82,7 +82,7 @@ export default {
       .signInWithEmailAndPassword(this.email, this.password)
       .then(data => {
         console.log(data);
-        this.$router.push('/dashboard')
+        this.$router.push('/admin/dashboard')
       })
       .catch(error => this.error = error);
     }

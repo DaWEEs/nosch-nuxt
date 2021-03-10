@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "noschmaturita",
+  "private_key_id": "318e434b17e0bfec5d432ab08499139fc61e03a6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCtH1EnWieYiYDY\n8rx70AxRLi3f60bdwsWpWVI4zel8D/I5MIkHSZwnoCsI9GHIdtvjAF+DQozz2ZUK\nfvNZJi+H2yJB9dr9RSzbt1GMuypu3l9Hj0qUEmkOH5imu1n8BcNxRPZAhVEWU9m1\n/ZdRTD/4ntutoNHo4TxwzSjJY227m7quqI7t25NfoYtee/2rCLW5ZWFwte5YgGXj\nUPAv/xiALNysmgJQFiA3kYNKfaTHzxexVoEn6pwvHNqZXzz+aKBAUFBDFZiNjhFJ\ndaHC0wm63rxRKqhv8KNVdtgDOcLkg2EVQlI6GqGquLnko421xFljpB6BLOhgCCFe\nw07YMlNFAgMBAAECggEAAu7q/Vdz9cvt918Pg1UzAY9z1Agvacj9IowtTjdA8Orv\n6qOlorkO0LC690UgFgPbixUByUklTGlqnXmpWQtCVr3crqZCLl86bhjvpF/fIsSY\n89mxRLaAz1jeNC8BoePyxovJqgNdlxsBxJQLeQ4UGbvj/XpiLB0K3N9rr5PZc1+z\nj6N5C5skEaIS9KJLcc2qT3A9kve/gJXSq8oJqndQ3Xxz75q9WcdMoLkUNiacn6lL\nxlPd5j4n0UVYDvw2iU9Uy15jy6cefvG5d02Q+ulmucYy7qdle+MlX/9uKvqHoQS8\nV4a8823kC3sH4LEQ3glU4xbZzmZ0FLMSTWihEB9IUQKBgQDTixwBLcyjBFyDbxs0\n9CSok/+3ADKZHMR+lAkJn4GJY1hE0JbsQO2J4oDWPtWml57ha0sr8+aRQ/1yoh8G\n9GpsCEg1rccnQe2hLf3dYkKSRYMTuhWsBXd7tUuo+PmnURUxv2B9P5MwUo2d6R8l\n1WR0zNx4dVk7/zQI7lugjUF1lQKBgQDRgS44AhD5NS1+u4tDTYasixztHWKfLiwU\nvUxeQRxT2c2jH6fNEZBaihS+qugnxuL5q26MhxhV+j5lX4dUNz+in2Nhck13hlOD\nt2d8pQZbttmVhwCqlY4X0cfRyWcaPTgKCs1qMrjmgnmak6agwkMN2vw8nEeaXEw6\nS5J49bua8QKBgQCSWOuv2Rp4ML075HKjCMAPrAu9c7KNgHxjwVAbSzEXdhYLzW6L\n1UNAH+XX0jKGhOBSvKKNrrd1Cd9eHdBvREoXoQcrs6RSgWa/Gg1FygOaI+LRk+wI\nTOPjPoIwTMaSPSL3fplnLMNMK+BzPWLiDqXntA5We4CXZC+Aej4DbZW6nQKBgB+K\nznWaQgnzKq1Y+Seh5XPW4f0FHpMOtY5NzdCnBufM8/vqSS5DxbML9QGb46YReJzU\nZal8sXpIWdqTXmGci9UlICZMukMTk0FSfJ80jVeDmRC9KamFKMaHTAlWxFIcA3Ln\nm3OwvUvfOwW90ymC9euBG9bYRKOF3+gq9puFi8BRAoGBALuGK7Ls+EE/8aKpfsWc\n6zcOSr/pAFU9Z/y8SAi/VR5ellFACb/4cvgnGC/ld2z8jD0gXT91Q2b1/eAyoU6g\nHzqBN7le5DMMJc9bRypDcuMrZEy2XHx05ykGH0CI/aCgyNZLTjlyPjgosZsmNDnT\nEvo0Rs3ImhS2gF1p7Tl8FvmT\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-np2lz@noschmaturita.iam.gserviceaccount.com",
+  "client_id": "112833101775077679026",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-np2lz%40noschmaturita.iam.gserviceaccount.com"
+}

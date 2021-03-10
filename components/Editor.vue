@@ -58,6 +58,16 @@ export default {
     ],
     // starting editor's content
     content: '<p>Zde můžete psát text.</p>',
+
+    //Pravidla inputu
+    rules: [
+        value => !!value || 'Vyžadováno.',
+        value => (value && value.length >= 3) || 'Minimálně 3 písmena',
+      ],
+
+    snackbar: false,
+    text: '',
+    timeout: 2000,
   }),
 }
 </script>
