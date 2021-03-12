@@ -7,7 +7,7 @@
       <v-row>
         <v-col>
           <h1>O SOŠ Net Office</h1>
-          <p>{{uvod[0].hlavnitext}}</p>
+          <p>{{uvodArray[0].hlavnitext}}</p>
         </v-col>
         <v-col>
           <h1>Mohlo by Vás zajímat</h1>
@@ -22,7 +22,9 @@
     <ul>
       <li v-for="prispevek in prispevky.slice(0,3)" :key="prispevek.title">
         <h1><Nuxt-link :to="`/prispevky/${prispevek.url}`">{{prispevek.title}}</Nuxt-link></h1>
-        <p>{{prispevek.text}}</p>
+        <div class="aktualitatext">
+          <prispevek-preview :html="prispevek.text" />
+        </div>
       </li>
     </ul>
     </div>
@@ -31,16 +33,20 @@
 
 <script>
 import hero from '~/components/hero.vue'
+import WpContent from '~/components/WpContent.vue'
 import Axios from 'axios'
 import {db, firebase} from '~/plugins/firebase.js'
 import 'firebase/auth'
 import 'firebase/firestore'
+import PrispevekPreview from '~/components/PrispevekPreview.vue'
 
 
 export default {
   layout: 'pages',
   components: {
     hero,
+    WpContent,
+    PrispevekPreview
   },
   async asyncData(){
         let prispevky = []
@@ -51,17 +57,20 @@ export default {
         });
 
         let uvodArray = []
-        const result2 = await db.collection('stranky').where('hlavnitext', '!=', false).get();
-        result2.forEach(doc => {
-          //console.log(doc.id, '=>', doc.data());
-         uvodArray.push(doc.data());
-        });
+        const prispevek = db.collection('stranky').doc(`uvod`);
+        const doc = await prispevek.get();
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          uvodArray.push(doc.data());
+          console.log(uvodArray);
+        }
     
         return{
           prispevky: prispevky,
-          uvod: uvodArray,
+          uvodArray: uvodArray,
         }
-  },
+    },
 
 
   /*mounted () {
@@ -84,6 +93,15 @@ export default {
   align-items: center;
   text-align: center;
 }*/
+.aktualitatext h1,h2,h3,h4,p{
+    display: inline;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-size: 16px;
+    font-weight: normal;
+}
 .container{
   padding-top:0;
   padding: 12px;

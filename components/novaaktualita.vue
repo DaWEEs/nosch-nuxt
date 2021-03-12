@@ -7,12 +7,10 @@
     v-model="aktualita.title"
   ></v-text-field>
 
-
   <div style="padding: 20px 0px;">
     <!-- Use the component in the right place of the template -->
-    <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text."/>
+    <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
   </div>  
-
 
   <v-expansion-panels>
     <v-expansion-panel>
@@ -123,11 +121,12 @@ data: () => ({
         value => (value && value.length >= 3) || 'Minimálně 3 písmena',
       ],
 
-    content: '',
+    content: "",
     aktualita:{
         title:'',
-        text:'',
-        url:""
+        text:"",
+        url:"",
+        date:"",
     },
 
 
@@ -235,6 +234,8 @@ data: () => ({
           return str;
       }
       this.aktualita.url = removeDiacritics(this.aktualita.title).toLowerCase()
+      this.aktualita.date = new Date().toJSON();
+      this.aktualita.text = this.content;
       firebase.firestore()
       .collection("prispevky")
       .doc(this.aktualita.url)
@@ -244,6 +245,7 @@ data: () => ({
         this.aktualita.title = "";
         this.aktualita.text = "";
         this.aktualita.url = "";
+        this.aktualita.date = "";
         this.content = "";
       });
     }

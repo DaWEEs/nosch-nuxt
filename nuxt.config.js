@@ -46,7 +46,6 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -78,7 +77,11 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    transpile: ['vuetify/lib', "tiptap-vuetify"]
+    transpile: ['vuetify/lib', "tiptap-vuetify"],
+    extend(config, ctx) {
+      // Include the compiler version of Vue so that wp-content works
+      config.resolve.alias["vue$"] = "vue/dist/vue.esm.js"
+  }
   },
 
   services:{

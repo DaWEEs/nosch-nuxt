@@ -11,7 +11,7 @@
     >
       <v-toolbar-title>CMS ADMIN PANEL</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
+      <!--<v-btn
             fab
             small
             style="margin-right: 10px;"
@@ -20,7 +20,7 @@
             <v-icon>
               mdi-refresh
             </v-icon>
-      </v-btn>
+      </v-btn>-->
       <v-btn right v-on:click="logout()">
           Odhlásit se
       </v-btn>
@@ -31,12 +31,6 @@
           mdi-account
         </v-icon>
         Dashboard
-      </v-tab>
-      <v-tab>
-        <v-icon left>
-          mdi-pen
-        </v-icon>
-        Nová aktualita
       </v-tab>
       <v-tab>
         <v-icon left>
@@ -62,16 +56,6 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-
-      <!--Nová aktualita-->
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>
-            <novaaktualita />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
 
       <!--Uživatelé-->
       <v-tab-item>
