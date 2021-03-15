@@ -7,6 +7,13 @@
     v-model="aktualita.title"
   ></v-text-field>
 
+  <v-text-field
+    label="Krátký popis události*"
+    :rules="rules"
+    hide-details="auto"
+    v-model="aktualita.shorttext"
+  ></v-text-field>
+
   <div style="padding: 20px 0px;">
     <!-- Use the component in the right place of the template -->
     <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
@@ -124,6 +131,7 @@ data: () => ({
     content: "",
     aktualita:{
         title:'',
+        shorttext:'',
         text:"",
         url:"",
         date:"",
@@ -243,6 +251,7 @@ data: () => ({
       .then(()=>{
         this.snackbar = true;
         this.aktualita.title = "";
+        this.aktualita.shorttext = "";
         this.aktualita.text = "";
         this.aktualita.url = "";
         this.aktualita.date = "";

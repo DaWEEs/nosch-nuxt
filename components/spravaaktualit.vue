@@ -4,8 +4,10 @@
     <v-data-table
       :headers="headers"
       :items="prispevky"
-      sort-by="title"
+      sort-by="date"
+      :sort-desc="true"
       class="elevation-1"
+      :search="search"
     >
       <template v-slot:top>
         <v-toolbar
@@ -18,6 +20,14 @@
             >
               mdi-refresh
             </v-icon>
+          <v-spacer />
+          <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Vyhledat"
+          single-line
+          hide-details
+          ></v-text-field>
           <v-spacer />
           <v-dialog
             v-model="dialog"
@@ -72,7 +82,7 @@
               </v-card-actions>
               </v-card-title>
               <v-card-text>
-                <editaktualita :propText="editedItem.text" :propTitle="editedItem.title" :propUrl="editedItem.url"/>
+                <editaktualita :propText="editedItem.text" :propTitle="editedItem.title" :propShortText="editedItem.shorttext" :propUrl="editedItem.url"/>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -115,42 +125,6 @@
     </v-data-table>
   </v-app>
 </div>
-  <!--<v-simple-table>
-    <template v-slot:default>
-      <thead>
-        <tr>
-          <th class="text-left">
-            Jméno aktuality
-          </th>
-          <th class="text-left">
-            URL
-          </th>
-          <th class="text-left">
-
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr v-for="prispevek in prispevky" :key="prispevek.title">
-            <td style="text-align:center"><Nuxt-link :to="`/prispevky/${prispevek.url}`" target="_blank">{{ prispevek.title }}</Nuxt-link></td>
-            <td style="text-align:center">/prispevky/{{ prispevek.url }}</td>
-            <td style="text-align:center">
-              <Nuxt-link :to="`/`">
-              <v-btn
-              color="#64B5F6"
-              elevation="2"
-              >Upravit</v-btn>
-              </Nuxt-link>
-              <v-btn
-              color="#64B5F6"
-              elevation="2"
-              @click="del(prispevek.url)"
-              >Smazat</v-btn>
-          </td>
-          </tr>
-      </tbody>
-    </template>
-  </v-simple-table>-->
 </template>
 
 <script>
@@ -179,16 +153,19 @@ export default {
     editedIndex: -1,
     editedItem: {
       title: '',
+      shortText: '',
       url: '',
       date: '',
       text: '',
     },
     defaultItem: {
       title: '',
+      shortText: '',
       url: '',
       date: '',
       text: '',
     },
+    search: '',
   }),
 
   computed: {
@@ -221,6 +198,9 @@ export default {
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.prispevky.push(doc.data());
+        var datumDate = new Date(this.prispevky[i].date)
+        this.prispevky[i].date = datumDate.getDate()+". "+(datumDate.getMonth()+1)+". "+datumDate.getFullYear();
+        i++;
       });
     },
 
@@ -272,8 +252,8 @@ export default {
     aktualizovat(){
       this.$nuxt.reload();
     }
-    },
-  }
+  },
+}
   
 
 /*export default {

@@ -4,7 +4,7 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - nuxt',
-    title: 'nuxt',
+    title: 'Střední odborná škola NET OFFICE',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -15,6 +15,8 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.min.css' }
+    ],
+    script:[
 
     ]
   },
@@ -36,6 +38,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -84,9 +87,14 @@ export default {
   }
   },
 
+  analytics: {
+    collectionEnabled: true // default
+  },
+
   services:{
     firestore: true,
     auth:true,
+    analytics: true,
   },
 
   auth: {
@@ -107,5 +115,9 @@ export default {
     enablePersistence: true,
     emulatorPort: 8080,
     emulatorHost: 'localhost',
+  },
+
+  googleAnalytics: {
+    id: 'G-BRBD2PEP7S'
   }
 }

@@ -1,33 +1,48 @@
 <template>
   <div>
     <hero />
-  <div class="container">
-
     <v-container>
       <v-row>
         <v-col>
-          <h1>O SOŠ Net Office</h1>
-          <p>{{uvodArray[0].hlavnitext}}</p>
-        </v-col>
-        <v-col>
-          <h1>Mohlo by Vás zajímat</h1>
-          <ul>
-            <li></li>
-          </ul>
+          <p style="text-align:center; padding: 30px 0;">{{uvodArray[0].hlavnitext}}</p>
         </v-col>
       </v-row>
-    </v-container>
     
-    <h1>Aktuality</h1>
-    <ul>
-      <li v-for="prispevek in prispevky.slice(0,3)" :key="prispevek.title">
-        <h1><Nuxt-link :to="`/prispevky/${prispevek.url}`">{{prispevek.title}}</Nuxt-link></h1>
-        <div class="aktualitatext">
-          <prispevek-preview :html="prispevek.text" />
-        </div>
+    
+    <h1 style="text-transform:uppercase;">Aktuality</h1>
+    <ul class="prispevekpreview">
+      <li v-for="prispevek in prispevky" :key="prispevek.title" class="aktuality">
+        <Nuxt-link :to="`/prispevky/${prispevek.url}`">
+          <v-card>
+            <v-card-title>
+              {{prispevek.title}}
+            </v-card-title>
+            <v-card-subtitle>
+              {{prispevek.date}}
+            </v-card-subtitle>
+            <v-card-text>
+              {{prispevek.shorttext}}
+            </v-card-text>
+          </v-card>
+          <!--<div class="prispevekdiv">
+            <h1 style="font-size:25px; text-align:center;">{{prispevek.title}}</h1>
+            <div class="aktualitatext" style="text-align:center; margin-top:10px;">
+              <prispevek-preview :html="prispevek.shorttext" />
+            </div>
+          </div>-->
+        </Nuxt-link>
+      </li>
+      <li class="vice-aktualit">
+        <nuxt-link :to="'/prispevky/'">
+          <div class="btn">
+            <p style="text-transform: uppercase; font-weight:bold;">
+              Více aktualit >
+            </p>
+          </div>
+        </nuxt-link>
       </li>
     </ul>
-    </div>
+    </v-container>
   </div>
 </template>
 
@@ -42,7 +57,7 @@ import PrispevekPreview from '~/components/PrispevekPreview.vue'
 
 
 export default {
-  layout: 'pages',
+  layout: 'main',
   components: {
     hero,
     WpContent,
@@ -50,10 +65,14 @@ export default {
   },
   async asyncData(){
         let prispevky = []
-        const result = await db.collection('prispevky').get();
+        let i = 0;
+        const result = await db.collection('prispevky').orderBy('date', 'desc').limit(3).get();
         result.forEach(doc => {
           //console.log(doc.id, '=>', doc.data());
           prispevky.push(doc.data());
+          var datumDate = new Date(prispevky[i].date)
+          prispevky[i].date = datumDate.getDate()+". "+(datumDate.getMonth()+1)+". "+datumDate.getFullYear();
+          i++;
         });
 
         let uvodArray = []
@@ -72,12 +91,6 @@ export default {
         }
     },
 
-
-  /*mounted () {
-    Axios
-      .get('https://noschmaturita-default-rtdb.europe-west1.firebasedatabase.app/prispevek.json')
-      .then(response => (console.log(response.data)))
-  },*/
   methods:{
 
   }
@@ -93,15 +106,52 @@ export default {
   align-items: center;
   text-align: center;
 }*/
-.aktualitatext h1,h2,h3,h4,p{
-    display: inline;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-size: 16px;
-    font-weight: normal;
+body{
+  background-color:#001942;
+  color:#fff;
+  font-size:18px;
 }
+
+.vice-aktualit{
+  width:10%;
+}
+
+.prispevekpreview{
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style-type: none;
+  margin-top:20px;
+}
+
+.prispevekpreview li{
+  width:100%;
+  margin: 0px;
+  padding-right:15px;
+}
+
+.prispevekpreview li a{
+  text-decoration: none;
+  color:#fff;
+}
+
+.prispevekpreview li a:link{
+  text-decoration: none;
+  color:#fff;
+}
+
+.prispevekpreview li a:visited{
+  text-decoration: none;
+  color:#fff;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .container{
   padding-top:0;
   padding: 12px;

@@ -40,9 +40,15 @@
       </v-tab>
       <v-tab>
         <v-icon left>
-          mdi-account-group-outline
+          mdi-pencil
         </v-icon>
-        Nastavení účtu
+        Správa stránek
+      </v-tab>
+      <v-tab>
+        <v-icon left>
+          mdi-form-textbox-password
+        </v-icon>
+        Změna hesla
       </v-tab>
 
 
@@ -67,10 +73,20 @@
       </v-tab-item>
 
 
-      <!--Uživatelé-->
+      <!--Správa stránek-->
       <v-tab-item>
         <v-card flat>
           <v-card-text>
+            <spravastranek />
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <!--Správa uživatele-->
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            <spravauzivatele />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -84,7 +100,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth'
 import { getUserFromCookie, getUserFromSession } from '@/helpers/cookie.js'
 import Vuetify from 'vuetify/lib'
-import novaaktualita from '@/components/novaaktualita'
 
 export default {
     data: () => ({
@@ -92,7 +107,7 @@ export default {
     items: [
           { title: 'Dashboard', icon: 'mdi-home-city' },
           { title: 'Přidat aktualitu', icon: 'mdi-pencil' },
-          { title: 'Uživatelé', icon: 'mdi-account-group-outline' },
+          { title: 'Uživatelé', icon: 'mdi-form-textbox-password' },
         ],
     //Data aktualit
   }),

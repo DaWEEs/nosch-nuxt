@@ -1,9 +1,14 @@
 <template>
   <section class="intro" id="intro">
+    <Logo />
     <figure>
-      <video loop autoplay preload muted src="/nosch.webm" alt=""></video>
-      <img src="/slider_1.jpg" alt="" />
+      <video loop autoplay preload muted src="~assets/nosch.webm" alt=""></video>
+      <img src="~assets/slider_1.jpg" alt="" />
     </figure>
+    <div class="intro-text">
+      <h1>"S námi jste vždy o pár kroků napřed!"<br><span>- SOŠ NET OFFICE</span></h1>
+    </div>
+    <navigationhero />
   </section>
 </template>
 
@@ -19,12 +24,12 @@ export default {}
     position:relative;
     top:0px;
     left:0;
-    height:73vh;
+    height:100vh;
 }
 
 figure{
   height:100%;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,25,66,0.5);
 }
 
 .intro::after {
@@ -35,7 +40,7 @@ figure{
 
 figure img{
     width:100%;
-    height: 73vh;
+    height: 100vh;
     float: right;
     position: absolute;
     top:0;
@@ -51,7 +56,7 @@ figure img{
 
 figure video{
     width:100%;
-    height: 73vh;
+    height: 100vh;
     float: right;
     position: absolute;
     top:0;
@@ -66,21 +71,25 @@ figure video{
 }
 
 .intro-text{
-    margin:0 auto;
-    z-index: 3;
-    text-align: center;
-    color:#fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
 }
 
 .intro-text h1{
     color:#fff;
-    font-size: 32px;
+    font-size: 64px;
     font-weight: 800;
 }
 
-.intro-text p{
+.intro-text span{
     color:#fff;
-    font-size: 26px;
+    font-size: 48px;
     font-weight: 300;
 }
 

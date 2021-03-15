@@ -1,6 +1,9 @@
 <template>
   <div>
+    <navigationhero />
+    
     <Nuxt />
+
     <footer-main/>
   </div>
 </template>
@@ -19,12 +22,5 @@ export default {
 </script>
 
 <style>
-body{
-  background-color:#001942;
-  color:#fff;
-  font-size:18px;
-}
-#__nuxt, #__layout{
-  min-height: 100vh;
-}
+
 </style>

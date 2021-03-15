@@ -9,7 +9,8 @@
   style="margin:0 auto;position:relative;top:50px; left:0;"
     >
       <v-card-title style="justify-content:center">
-        <span>Přihlášení do admin sekce</span>
+        <img src="~assets/logo_n.png" style="width:50%;"/>
+        <span style="margin-top:10px; width:100%; text-align:center;">Přihlášení do admin sekce</span>
       </v-card-title>
       <v-card-text>
           <v-text-field
@@ -24,7 +25,6 @@
             :rules="[rules.required, rules.min]"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show1 ? 'text' : 'password'"
-            :counter="10"
             label="Heslo"
             name="input-10-1"
             @click:append="show1 = !show1"
@@ -41,7 +41,7 @@
       </v-card-actions>
     </v-card>
   </v-form>
-  <div class="error" v-if="error">{{error.message}}</div>
+  <div class="error">{{error.message}}</div>
 </div>
 </template>
 
@@ -81,7 +81,6 @@ export default {
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
       .then(data => {
-        console.log(data);
         this.$router.push('/admin/dashboard')
       })
       .catch(error => this.error = error);

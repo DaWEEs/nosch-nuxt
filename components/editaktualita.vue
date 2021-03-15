@@ -7,9 +7,20 @@
     v-model="propTitle"
   ></v-text-field>
 
+  <v-text-field
+    label="Krátký popis aktuality*"
+    :rules="rules"
+    hide-details="auto"
+    v-model="propShortText"
+  ></v-text-field>
+
   <div style="padding: 20px 0px;">
     <!-- Use the component in the right place of the template -->
-    <tiptap-vuetify v-model="propText" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
+    <tiptap-vuetify 
+    v-model="propText" 
+    :extensions="extensions" 
+    placeholder="Zde můžete začít psát svůj text." 
+    />
   </div>  
 
   <v-expansion-panels>
@@ -91,7 +102,8 @@ components: { TiptapVuetify },
 props:[
   "propTitle",
   "propText",
-  "propUrl"
+  "propUrl",
+  "propShortText"
 ],
 data: () => ({
     extensions: [
@@ -128,6 +140,7 @@ data: () => ({
 
     aktualita:{
         title:'',
+        shorttext:'',
         text:"",
         url:"",
         date:"",
@@ -143,6 +156,7 @@ data: () => ({
       this.aktualita.url = this.propUrl;
       this.aktualita.date = new Date().toJSON();
       this.aktualita.title = this.propTitle;
+      this.aktualita.shorttext = this.propShortText;
       this.aktualita.text = this.propText;
       firebase.firestore()
       .collection("prispevky")
