@@ -50,6 +50,7 @@
         </v-icon>
         Změna hesla
       </v-tab>
+      <v-divider></v-divider>
       <a href="https://console.firebase.google.com/u/1/project/noschmaturita/" target="_blank">
         <v-tab>
           <v-icon left>
