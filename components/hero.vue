@@ -16,7 +16,7 @@
 export default {}
 </script>
 
-<style>
+<style lang="scss">
 .intro
 {
     width:100%;
@@ -94,11 +94,20 @@ figure video{
 }
 
 @media screen and (max-width:768px){
-    figure video{
-        display:none;
+    .intro-text{
+      margin: 0 2Opx;
     }
-    figure img{
-        display:block;
+}
+
+@media screen and (max-width:420px){
+    .intro-text{
+      h1{
+        margin: 0 2Opx;
+        font-size:2rem;
+      }
+      span{
+        font-size:1rem;
+      }
     }
 }
 </style>

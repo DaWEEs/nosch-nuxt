@@ -1,6 +1,16 @@
 <template>
   <div>
     <!-- Use the component in the right place of the template -->
+    <editor-menu-bar :editor="editor" v-slot="{ commands }">
+      <div class="menubar">
+        <button
+          class="menubar__button"
+          @click="showImagePrompt(commands.image)"
+        >
+          <icon name="image" />
+        </button>
+      </div>
+    </editor-menu-bar>
     <tiptap-vuetify v-model="content" :extensions="extensions" />
   </div>
 </template>
@@ -23,7 +33,7 @@ import {
   Blockquote,
   HardBreak,
   HorizontalRule,
-  History
+  History,
 } from 'tiptap-vuetify'
 
 export default {
@@ -54,7 +64,7 @@ export default {
       Code,
       HorizontalRule,
       Paragraph,
-      HardBreak
+      HardBreak,
     ],
     // starting editor's content
     content: '<p>Zde můžete psát text.</p>',

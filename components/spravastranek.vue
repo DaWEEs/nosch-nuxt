@@ -1,56 +1,166 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="stranky"
-    item-key="id"
-    sort-by="id"
-    group-by="id"
-    class="elevation-1"
-  ></v-data-table>
+  <div id="app">
+  <v-app id="inspire">
+    <v-data-table
+      :headers="headers"
+      :items="stranky"
+      sort-by="date"
+      :sort-desc="true"
+      class="elevation-1"
+      :search="search"
+    >
+      <template v-slot:top>
+        <v-toolbar
+          flat
+        >
+          <v-toolbar-title>STRÁNKY</v-toolbar-title>
+          <v-icon
+             style="margin-left: 10px;"
+            @click="initialize()"
+            >
+              mdi-refresh
+            </v-icon>
+          <v-spacer />
+          <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Vyhledat"
+          single-line
+          hide-details
+          ></v-text-field>
+          <v-spacer />
+          <v-dialog
+            v-model="dialog"
+            max-width="1000px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#64B5F6"
+                dark
+                class="mb-2"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Nová stránka
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Nová stránka</span>
+                <v-spacer></v-spacer>
+                <v-card-actions>
+                <v-btn
+                  icon
+                  @click="close"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-card-actions>
+              </v-card-title>
+  
+              <v-card-text>
+                <novastranka />
+              </v-card-text>
+  
+            </v-card>
+          </v-dialog>
+          <v-dialog
+            v-model="dialogEdit"
+            max-width="1000px"
+          >
+            <v-card>
+              <v-card-title>
+                <span class="headline">Editovat stránku</span>
+                <v-spacer></v-spacer>
+                <v-card-actions>
+                <v-btn
+                  icon
+                  @click="close"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-card-actions>
+              </v-card-title>
+              <v-card-text>
+                <editstranka :propTitle="editedItem.title" :propUrl="editedItem.url" :propText="editedItem.text"/>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="headline">Opravdu chcete smazat tuto stránku?</v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Ano</v-btn>
+                <v-btn color="blue darken-1" text @click="closeDelete">Ne</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small
+          @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn
+          color="#64B5F6"
+          @click="initialize"
+        >
+          Načíst znovu
+        </v-btn>
+      </template>
+    </v-data-table>
+  </v-app>
+</div>
 </template>
 
 <script>
 import {db, firebase} from '~/plugins/firebase.js'
 import 'firebase/auth'
 import 'firebase/firestore'
+import Novastranka from './novastranka.vue'
 
 export default {
-  components: { novaaktualita, Editaktualita},
+  components: {Novastranka },
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
-      {
-        text: 'Název aktuality',
-        align: 'start',
-        value: 'title',
-      },
+      { text: 'Název stránky', align: 'start', value: 'title', },
       { text: 'URL', value: 'url' },
-      { text: 'Datum', value: 'date' },
       { text: 'Akce', value: 'actions', sortable: false },
     ],
-    prispevky: [],
+    stranky: [],
     editedIndex: -1,
     editedItem: {
-      title: '',
-      shortText: '',
-      url: '',
-      date: '',
       text: '',
+      title: '',
+      url: '',
     },
     defaultItem: {
+      text:'',
       title: '',
-      shortText: '',
       url: '',
-      date: '',
-      text: '',
     },
     search: '',
   }),
 
   computed: {
     formTitle () {
-      return this.editedIndex === -1 ? 'Nová aktualita' : 'Editovat aktualitu'
+      return this.editedIndex === -1 ? 'Nová stránka' : 'Editovat stránku'
     },
   },
 
@@ -72,34 +182,30 @@ export default {
 
   methods: {
     async initialize () {
-      let i = 0;
-      this.prispevky = [];
-      const result = await db.collection('prispevky').get();
+      this.stranky = [];
+      const result = await db.collection('stranky').get();
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
-        this.prispevky.push(doc.data());
-        var datumDate = new Date(this.prispevky[i].date)
-        this.prispevky[i].date = datumDate.getDate()+"."+datumDate.getMonth()+". "+datumDate.getFullYear();
-        console.log(this.prispevky);
-        i++;
+        this.stranky.push(doc.data());
+        console.log(this.stranky);
       });
     },
 
     editItem (item) {
-      this.editedIndex = this.prispevky.indexOf(item)
+      this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogEdit = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.prispevky.indexOf(item)
+      this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
     async deleteItemConfirm() {
-      this.prispevky.splice(this.editedIndex, 1)
-      const sma = await db.collection('prispevky').doc(this.editedItem.url);
+      this.stranky.splice(this.editedIndex, 1)
+      const sma = await db.collection('stranky').doc(this.editedItem.url);
       sma.delete();
       this.closeDelete()
     },
@@ -123,9 +229,9 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.prispevky[this.editedIndex], this.editedItem)
+        Object.assign(this.stranky[this.editedIndex], this.editedItem)
       } else {
-        this.prispevky.push(this.editedItem)
+        this.stranky.push(this.editedItem)
       }
       this.close()
     },
@@ -164,22 +270,22 @@ export default {
 
 /*export default {
   data: () => ({
-    prispevky: [],
+    stranky: [],
   }),
 
   async fetch(){
       let i = 0;
-      this.prispevky = [];
-      const result = await db.collection('prispevky').get();
+      this.stranky = [];
+      const result = await db.collection('stranky').get();
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
-        this.prispevky.push(doc.data());
+        this.stranky.push(doc.data());
       });
   },
 
   methods:{
       async del(url){
-        const sma = await db.collection('prispevky').doc(url);
+        const sma = await db.collection('stranky').doc(url);
         sma.delete();
         this.$nuxt.refresh()
       }

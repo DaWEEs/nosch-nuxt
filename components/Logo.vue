@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <NuxtLink to="/">
-      <img src="~assets/logo_office.svg">
+      <img src="~assets/img/logo_office.svg">
     </NuxtLink>
   </div>
 </template>
@@ -20,6 +20,19 @@ a img {
 .container{
   padding:0;
   height:0;
+}
+
+@media (max-width:768px){
+    a img {
+    height: 100px;
+    width:100%;
+    background-color:#001942;
+    padding: 10px;
+    border-bottom: #fff solid 2px;
+    border-radius: 0px 0px 5px 5px;
+    position:absolute;
+    top:0;
+  }
 }
 
 @keyframes appear {

@@ -1,16 +1,8 @@
 <template>
   <div class="prispevek">
     <v-container>
-      <h1>{{prispevek[0].title}}</h1>
-      <p style="text-align:center; color:#808080;">{{prispevek[0].date}}</p>
-      <wp-content :html="prispevek[0].text" />
-      <hr>
-      <p style="text-align:right;">
-        <a @click="$router.go(-1)">
-          <v-icon color="#000">mdi-arrow-left</v-icon>
-          Vrátit se zpět
-        </a>
-      </p>
+      <h1>{{stranka[0].title}}</h1>
+      <wp-content :html="stranka[0].text" />
     </v-container>
   </div>
 </template>
@@ -19,25 +11,25 @@
 import {db, firebase} from '~/plugins/firebase.js'
 import 'firebase/auth'
 import 'firebase/firestore'
-import WpContent from '~/components/WpContent.vue'
+import FooterMain from '~/components/FooterMain.vue'
+import pagesnavigation from '~/components/pagesnavigation.vue'
+
 export default {
+  components: { pagesnavigation, FooterMain },
   layout: 'pages',
-  components: { WpContent },
   async asyncData(context){
-      let pris = [];
-      const prispevek = db.collection('prispevky').doc(context.params.id);
+      let stranka = [];
+      const prispevek = db.collection('stranky').doc(context.params.stranky);
       const doc = await prispevek.get();
       if (!doc.exists) {
-        pris.push({
+        stranka.push({
           title:"Stránka nenalezena :(",
           text:"<p style='text-align:center;'><a href='/'>Zpět na hlavní stránku</a></p>"
         })
-        return {prispevek : pris};
+        return {stranka: stranka};
       } else {
-        pris.push(doc.data());
-        var datumDate = new Date(pris[0].date)
-        pris[0].date = datumDate.getDate()+". "+(datumDate.getMonth()+1)+". "+datumDate.getFullYear();
-        return {prispevek : pris};
+        stranka.push(doc.data());
+        return {stranka : stranka};
       }
   }
 }
@@ -57,16 +49,6 @@ export default {
 
     p{
       padding: 15px 0;
-      & a{
-        text-decoration: none;
-        cursor: pointer;
-        &:link{
-          color:#000;
-        }
-        &:visited{
-          color:#000;
-        }
-      }
     }
 
     img{

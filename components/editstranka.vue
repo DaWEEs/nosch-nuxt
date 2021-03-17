@@ -1,17 +1,10 @@
 <template>
 <v-container>
   <v-text-field
-    label="Název aktuality*"
+    label="Název stránky*"
     :rules="rules"
     hide-details="auto"
     v-model="propTitle"
-  ></v-text-field>
-
-  <v-text-field
-    label="Krátký popis aktuality*"
-    :rules="rules"
-    hide-details="auto"
-    v-model="propShortText"
   ></v-text-field>
 
   <div style="padding: 20px 0px;">
@@ -44,10 +37,9 @@
     </v-expansion-panel>
   </v-expansion-panels>
 
-
   <div style="padding-top: 50px;">
-    <v-btn v-on:click="addaktualita()">
-      Uložit změny
+    <v-btn v-on:click="addstranky()">
+      Editovat stránku
     </v-btn>
   </div>
 
@@ -56,7 +48,7 @@
     v-model="snackbar"
     :timeout="timeout"
   >
-    Aktualita byla úspěšně odeslána
+    Stránka byla úspěšně editována
 
     <template v-slot:action="{ attrs }">
       <v-btn
@@ -104,7 +96,6 @@ props:[
   "propTitle",
   "propText",
   "propUrl",
-  "propShortText"
 ],
 data: () => ({
     extensions: [
@@ -134,42 +125,35 @@ data: () => ({
       HardBreak, // line break on Shift + Ctrl + Enter
       Image
     ],
+    
 
     rules: [
         value => !!value || 'Vyžadováno.',
         value => (value && value.length >= 3) || 'Minimálně 3 písmena',
       ],
 
-    aktualita:{
-        title:'',
-        shorttext:'',
-        text:"",
-        url:"",
-        date:"",
+    content: "",
+    stranky:{
+      title:"",
+      url:"",
+      text:"",
     },
-
 
     snackbar:false,
     timeout:2000,
   }),
 
   methods:{
-    addaktualita(){
-      this.aktualita.url = this.propUrl;
-      this.aktualita.date = new Date().toJSON();
-      this.aktualita.title = this.propTitle;
-      this.aktualita.shorttext = this.propShortText;
-      this.aktualita.text = this.propText;
+    addstranky(){
+      this.stranky.title = this.propTitle;
+      this.stranky.url = this.propUrl;
+      this.stranky.text = this.propText;
       firebase.firestore()
-      .collection("prispevky")
-      .doc(this.aktualita.url)
-      .set(this.aktualita)
+      .collection("stranky")
+      .doc(this.propUrl)
+      .set(this.stranky)
       .then(()=>{
         this.snackbar = true;
-        this.aktualita.title = "";
-        this.aktualita.text = "";
-        this.aktualita.url = "";
-        this.aktualita.date = "";
       });
     }
   }

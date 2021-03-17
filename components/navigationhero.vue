@@ -7,7 +7,7 @@
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/about">
+        <NuxtLink to="/uchazec">
           Uchazeč
         </NuxtLink>
       </li>
@@ -17,12 +17,12 @@
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/about">
+        <NuxtLink to="/student">
           Student
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/about">
+        <NuxtLink to="/o-nas">
           O nás
         </NuxtLink>
       </li>
@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 
 #linknav {
   width: 100%;
@@ -61,18 +61,7 @@
   background-color:#001942;
   border-top: #fff solid 2px;
   border-radius:5px 5px 0px 0px;
-}
-
-#linknav ul li{
-  list-style: none;
-  margin: 0 15px;
-  flex-direction: row;
-}
-
-#linknav ul li:first-child{
-  list-style: none;
-  margin: 0 15px 0 0;
-  flex-direction: row;
+  list-style-type: none;
 }
 
 #linknav ul li a{
@@ -80,12 +69,36 @@
   text-decoration: none;
   text-transform: uppercase;
   align-items:center;
+  margin: 0 10px;
 }
 
 #linknav ul li a.nuxt-link-exact-active {
   color: #66b3ff;
   padding-bottom:8px;
   border-bottom: 2px solid #66b3ff;
+}
+
+@media screen and (max-width:768px){
+  #linknav ul{
+    display:block;
+    flex-direction: column;
+    text-align:center;
+    list-style-type: none;
+     & li{
+       display:block;
+       width:100%;
+       height:auto;
+       margin: 5px 0;
+        & a.nuxt-link-exact-active {
+          color: #66b3ff;
+          padding-bottom:1px;
+          border-bottom: 2px solid #66b3ff;
+        }
+       &::first-child{
+        margin-left:0;
+      }
+     }
+  }
 }
 </style>
 

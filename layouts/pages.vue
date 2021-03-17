@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Nuxt />
+    <pagesnavigation />
+    <Nuxt style="margin-top:110px;"/>
     <footer-main/>
   </div>
 </template>
@@ -9,19 +10,19 @@
 import quicknav from '~/components/quicknav.vue'
 import navigationhero from '~/components/navigationhero.vue'
 import FooterMain from '~/components/FooterMain.vue'
+import Pagesnavigation from '~/components/pagesnavigation.vue'
 export default {
   components: {
     navigationhero,
     quicknav,
-    FooterMain
+    FooterMain,
+    Pagesnavigation
 }
 }
 </script>
 
 <style>
 body{
-  background-color:#001942;
-  color:#fff;
   font-size:18px;
 }
 #__nuxt, #__layout{

@@ -1,4 +1,6 @@
 <template>
+<div>
+  <h1 style="text-transform:upprecase; text-align:center;">Aktuality</h1>
   <ul class="prispevekpreview">
     <li v-for="prispevek in prispevky" :key="prispevek.title" style="padding:15px;">
       <Nuxt-link :to="`/prispevky/${prispevek.url}`">
@@ -22,18 +24,17 @@
         </Nuxt-link>
     </li>
   </ul>
+</div>
 </template>
 
 <script>
 import {db, firebase} from '~/plugins/firebase.js'
 import 'firebase/auth'
 import 'firebase/firestore'
-import PrispevekPreview from '~/components/PrispevekPreview.vue'
 
 export default {
   layout: 'pages',
   components: {
-    PrispevekPreview
   },
   async asyncData(){
     let prispevky = []
@@ -54,12 +55,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .prispevekpreview{
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
   list-style-type: none;
+  flex-direction: row;
   margin-top:20px;
+  height:100%;
+    & li{
+      width:33.33%;
+      height:100%;
+    }
 }
 </style>

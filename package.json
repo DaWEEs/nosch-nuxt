@@ -27,12 +27,15 @@
     "jwt-parser": "^2.0.0",
     "net": "^1.0.2",
     "nuxt": "^2.14.6",
+    "sass-loader": "^10.1.1",
     "tiptap-vuetify": "^2.24.0",
     "tls": "^0.0.1"
   },
   "devDependencies": {
     "@nuxtjs/google-analytics": "^2.4.0",
+    "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
+    "node-sass": "^5.0.0",
     "vuetify-loader": "^1.4.2"
   }
 }

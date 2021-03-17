@@ -2,13 +2,13 @@
   <div>
     <hero />
     <v-container>
+
       <v-row>
         <v-col>
-          <p style="text-align:center; padding: 30px 0;">{{uvodArray[0].hlavnitext}}</p>
+          <p class="maintext"><wp-content :html="uvodArray[0].text" /></p>
         </v-col>
       </v-row>
-    
-    
+  
     <h1 style="text-transform:uppercase;">Aktuality</h1>
     <ul class="prispevekpreview">
       <li v-for="prispevek in prispevky" :key="prispevek.title" class="aktuality">
@@ -24,36 +24,30 @@
               {{prispevek.shorttext}}
             </v-card-text>
           </v-card>
-          <!--<div class="prispevekdiv">
-            <h1 style="font-size:25px; text-align:center;">{{prispevek.title}}</h1>
-            <div class="aktualitatext" style="text-align:center; margin-top:10px;">
-              <prispevek-preview :html="prispevek.shorttext" />
-            </div>
-          </div>-->
         </Nuxt-link>
       </li>
       <li class="vice-aktualit">
         <nuxt-link :to="'/prispevky/'">
           <div class="btn">
             <p style="text-transform: uppercase; font-weight:bold;">
-              Více aktualit >
+              Více aktualit <v-icon color="#fff">mdi-arrow-right</v-icon>
             </p>
           </div>
         </nuxt-link>
       </li>
     </ul>
+
     </v-container>
   </div>
 </template>
 
 <script>
 import hero from '~/components/hero.vue'
-import WpContent from '~/components/WpContent.vue'
 import Axios from 'axios'
 import {db, firebase} from '~/plugins/firebase.js'
 import 'firebase/auth'
 import 'firebase/firestore'
-import PrispevekPreview from '~/components/PrispevekPreview.vue'
+import WpContent from '~/components/WpContent.vue'
 
 
 export default {
@@ -61,7 +55,6 @@ export default {
   components: {
     hero,
     WpContent,
-    PrispevekPreview
   },
   async asyncData(){
         let prispevky = []
@@ -76,13 +69,12 @@ export default {
         });
 
         let uvodArray = []
-        const prispevek = db.collection('stranky').doc(`uvod`);
+        const prispevek = db.collection('stranky').doc(`index`);
         const doc = await prispevek.get();
         if (!doc.exists) {
           console.log('No such document!');
         } else {
           uvodArray.push(doc.data());
-          console.log(uvodArray);
         }
     
         return{
@@ -97,7 +89,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 /*Navigation{
   margin: 0 auto;
   min-height: 100vh;
@@ -107,8 +99,8 @@ export default {
   text-align: center;
 }*/
 body{
-  background-color:#001942;
-  color:#fff;
+  background-color:#F2F2F8;
+  color:#000;
   font-size:18px;
 }
 
@@ -122,27 +114,45 @@ body{
   justify-content: center;
   list-style-type: none;
   margin-top:20px;
+
+  & li{
+    width:100%;
+    margin: 0px;
+    padding-right:15px;
+
+    & a{
+    text-decoration: none;
+    color:#fff;
+
+      &:link{
+        text-decoration: none;
+        color:#fff;
+      }
+
+      &:visited{
+        text-decoration: none;
+        color:#fff;
+      }
+    }
+  }
 }
 
-.prispevekpreview li{
-  width:100%;
-  margin: 0px;
-  padding-right:15px;
-}
-
-.prispevekpreview li a{
-  text-decoration: none;
-  color:#fff;
-}
-
-.prispevekpreview li a:link{
-  text-decoration: none;
-  color:#fff;
-}
-
-.prispevekpreview li a:visited{
-  text-decoration: none;
-  color:#fff;
+@media screen and (max-width:768px){
+  .prispevekpreview{
+    flex-wrap:wrap;
+      & li{
+        padding-right:0;
+        padding-top: 15px;
+      }
+  }
+  .btn{
+    min-height: 80px;
+    background-color: #66b3ff;
+    border-radius: 5px;
+  }
+  .maintext{
+    padding: 80px 15px !important;
+  }
 }
 
 .btn{
@@ -150,6 +160,8 @@ body{
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-color: #66b3ff;
+  border-radius: 5px;
 }
 
 .container{
@@ -162,10 +174,10 @@ body{
 .item{
   max-width: 50%;
   float:left;
-}
 
-.item p{
-  padding-top: 10px;
+    & p{
+      padding-top: 10px;
+    }
 }
 
 .row{
@@ -173,4 +185,20 @@ body{
   flex-wrap: wrap;
   flex-direction: row;
 }
+
+.maintext{
+  text-align:center;
+  padding: 120px;
+}
+</style>
+
+<style lang="scss" scoped>
+  .prispevekpreview{
+    padding-bottom: 80px;
+    & li {
+      & div.v-card{
+        height:100% !important;
+      }
+    }
+  }
 </style>

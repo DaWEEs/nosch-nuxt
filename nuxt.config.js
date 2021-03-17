@@ -5,25 +5,41 @@ export default {
   head: {
     titleTemplate: '%s - nuxt',
     title: 'Střední odborná škola NET OFFICE',
+    htmlAttrs:{
+      lang:'cs',
+      amp: true
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Webové stránky Střední odborné školy NET OFFICE Orlová spol. s.r.o' },
+      { name:"msapplication-TileColor", content:"#2b5797"},
+      { name:"theme-color", content:"#ffffff"},
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },      
+      { rel: 'icon', type: 'image/png', sizes:"180x180", href: '/favicon.ico' },      
+      { rel: 'icon', type: 'image/png', sizes:"32x32", href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes:"16x16", href: '/favicon-16x16.png' },  
+      { rel: 'apple-touch-icon', sizes:"180x180", href: '/apple-touch-icon.png'},
+      { rel: 'mask-icon', href:"/safari-pinned-tab.svg", color:'#5bbad5'},
+      { rel:'manifest', href: '/site.webmanifest'},    
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' },
       { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.min.css' }
     ],
     script:[
-
+      { type: 'text/javascript', src: '/main.js', defer: 'defer'}
     ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
+    '~assets/scss/colors.scss'
   ],
+
+  styleResources: {
+    scss: ['./assets/scss/*.scss']
+  },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
@@ -49,6 +65,7 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/style-resources'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -61,7 +78,7 @@ export default {
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ['~/assets/scss/variables.scss'],
     theme: {
       dark: false,
       themes: {

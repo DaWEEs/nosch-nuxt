@@ -9,7 +9,7 @@
   style="margin:0 auto;position:relative;top:50px; left:0;"
     >
       <v-card-title style="justify-content:center">
-        <img src="~assets/logo_n.png" style="width:50%;"/>
+        <img src="~assets/img/logo_n.png" style="width:50%;"/>
         <span style="margin-top:10px; width:100%; text-align:center;">Přihlášení do admin sekce</span>
       </v-card-title>
       <v-card-text>
@@ -32,8 +32,7 @@
       </v-card-text>
       <v-card-actions>
         <v-btn
-          depressed
-          elevation="5"
+          elevation="2"
           large
           block
           type="submit"
@@ -89,6 +88,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .login {
+    background-color:$main-color;
+  }
 </style>

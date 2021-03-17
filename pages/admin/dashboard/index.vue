@@ -9,7 +9,7 @@
     <v-toolbar
         color="#64B5F6"
     >
-      <v-toolbar-title>CMS ADMIN PANEL</v-toolbar-title>
+      <v-toolbar-title>ADMIN PANEL</v-toolbar-title>
       <v-spacer></v-spacer>
       <!--<v-btn
             fab
@@ -50,6 +50,14 @@
         </v-icon>
         Změna hesla
       </v-tab>
+      <a href="https://console.firebase.google.com/u/1/project/noschmaturita/" target="_blank">
+        <v-tab>
+          <v-icon left>
+            mdi-firebase
+          </v-icon>
+          Firebase
+        </v-tab>
+      </a>
 
 
 
@@ -63,7 +71,7 @@
         </v-card>
       </v-tab-item>
 
-      <!--Uživatelé-->
+      <!--Správa aktualit-->
       <v-tab-item>
         <v-card flat>
           <v-card-text>
@@ -77,7 +85,7 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-
+            <spravastranek />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -157,3 +165,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+a{
+  text-decoration:none;
+  color: rgba(0, 0, 0, 0.54);
+  &:visited{
+    color:rgba(0, 0, 0, 0.54);
+  }
+}
+</style>

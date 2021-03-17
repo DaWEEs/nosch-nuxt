@@ -1,17 +1,10 @@
 <template>
 <v-container>
   <v-text-field
-    label="Název aktuality*"
+    label="Název stránky*"
     :rules="rules"
     hide-details="auto"
-    v-model="aktualita.title"
-  ></v-text-field>
-
-  <v-text-field
-    label="Krátký popis události*"
-    :rules="rules"
-    hide-details="auto"
-    v-model="aktualita.shorttext"
+    v-model="stranky.title"
   ></v-text-field>
 
   <div style="padding: 20px 0px;">
@@ -25,7 +18,7 @@
         Ukázka
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <div class="tiptap-vuetify-editor__content" style="font-size:1.8rem;" v-html="aktualita.title" />
+        <div class="tiptap-vuetify-editor__content" style="font-size:1.8rem;" v-html="stranky.title" />
         <div class="tiptap-vuetify-editor__content" v-html="content"/>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -34,16 +27,15 @@
         HTML
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <div class="mt-3">&lt;h1&gt;{{ aktualita.title }}&lt;/h1&gt;</div>
+        <div class="mt-3">&lt;h1&gt;{{ stranky.title }}&lt;/h1&gt;</div>
         <div class="mt-3">{{ content }}</div>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
 
-
   <div style="padding-top: 50px;">
-    <v-btn v-on:click="addaktualita()">
-      Přidat aktualitu
+    <v-btn v-on:click="addstranky()">
+      Přidat stránku
     </v-btn>
   </div>
 
@@ -52,7 +44,7 @@
     v-model="snackbar"
     :timeout="timeout"
   >
-    Aktualita byla úspěšně odeslána
+    Stránka byla úspěšně přidána
 
     <template v-slot:action="{ attrs }">
       <v-btn
@@ -131,12 +123,10 @@ data: () => ({
       ],
 
     content: "",
-    aktualita:{
+    stranky:{
         title:'',
-        shorttext:'',
         text:"",
         url:"",
-        date:"",
     },
 
 
@@ -145,7 +135,7 @@ data: () => ({
   }),
 
   methods:{
-    addaktualita(){
+    addstranky(){
       var defaultDiacriticsRemovalMap = [
           {'base':'A', 'letters':/[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g},
           {'base':'AA','letters':/[\uA732]/g},
@@ -243,21 +233,17 @@ data: () => ({
           }
           return str;
       }
-      this.aktualita.url = removeDiacritics(this.aktualita.title).toLowerCase()
-      this.aktualita.date = new Date().toJSON();
-      this.aktualita.text = this.content;
+      this.stranky.url = removeDiacritics(this.stranky.title).toLowerCase()
+      this.stranky.text = this.content;
       firebase.firestore()
-      .collection("prispevky")
-      .doc(this.aktualita.url)
-      .set(this.aktualita)
+      .collection("stranky")
+      .doc(this.stranky.url)
+      .set(this.stranky)
       .then(()=>{
         this.snackbar = true;
-        this.aktualita.title = "";
-        this.aktualita.shorttext = "";
-        this.aktualita.text = "";
-        this.aktualita.url = "";
-        this.aktualita.date = "";
-        this.content = "";
+        this.stranky.title = "";
+        this.stranky.text = "";
+        this.stranky.url = "";
       });
     }
   }
