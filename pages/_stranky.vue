@@ -45,6 +45,7 @@ export default {
     h1{
       text-align:center;
       text-transform: uppercase;
+      padding-bottom: 25px;
     }
 
     p{
