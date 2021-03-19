@@ -112,6 +112,7 @@ export default {
     firestore: true,
     auth:true,
     analytics: true,
+    storage: true,
   },
 
   auth: {

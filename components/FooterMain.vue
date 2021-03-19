@@ -68,22 +68,22 @@
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink :to="`/`">
+              <NuxtLink :to="`/uchazec`">
                 Uchazeč
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink :to="`/`">
+              <NuxtLink :to="`/verejnost`">
                 Veřejnost
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink :to="`/`">
+              <NuxtLink :to="`/student`">
                 Student
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink :to="`/`">
+              <NuxtLink :to="`/o-nas`">
                 O nás
               </NuxtLink>
             </li>

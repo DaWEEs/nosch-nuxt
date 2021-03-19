@@ -123,7 +123,6 @@ export default {
 
   async asyncData({ req, redirect }) {
     if (process.server) {
-      console.log('server', req.headers)
       const user = getUserFromCookie(req)
       //   console.log('b', getUserFromCookie(req))
       if (!user) {
