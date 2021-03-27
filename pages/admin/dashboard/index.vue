@@ -4,12 +4,13 @@
   max-width="100vw"
   tile
   flat
+  style="border-radius:0;"
   >
   <nuxt keep-alive />
     <v-toolbar
-        color="#64B5F6"
+        color="#001942"
     >
-      <v-toolbar-title>ADMIN PANEL</v-toolbar-title>
+      <v-toolbar-title><h3 style="color:#fff;">ADMIN PANEL</h3></v-toolbar-title>
       <v-spacer></v-spacer>
       <!--<v-btn
             fab
@@ -43,6 +44,18 @@
           mdi-pencil
         </v-icon>
         Správa stránek
+      </v-tab>
+      <v-tab>
+        <v-icon left>
+          mdi-contacts
+        </v-icon>
+        Správa kontaktů
+      </v-tab>
+      <v-tab>
+        <v-icon left>
+          mdi-facebook
+        </v-icon>
+        Správa soc. sítí
       </v-tab>
       <v-tab>
         <v-icon left>
@@ -87,6 +100,24 @@
         <v-card flat>
           <v-card-text>
             <spravastranek />
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <!--Správa stránek-->
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            <spravakontaktu />
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+
+      <!--Správa stránek-->
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+            <spravasiti />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -173,5 +204,9 @@ a{
   &:visited{
     color:rgba(0, 0, 0, 0.54);
   }
+}
+
+.v-tab.v-tab--active{
+  color: $main-color !important;
 }
 </style>

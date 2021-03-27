@@ -1,64 +1,68 @@
 <template>
   <div>
-    <h1 style="text-align:center;">Změna hesla</h1>
-    <v-form @submit.prevent="changePass">
-      <v-container fluid>
-        <v-row>
-          <v-col
-            cols="12"
-            sm="6"
-            style="margin: 0 auto;"
-          >
-          <v-text-field
-            v-model="email"
-            :emailRules="[emailRules]"
-            label="E-mail"
-            required
-          ></v-text-field>
-
-            <v-text-field
-              v-model="password"
-              :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min]"
-              :type="show3 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Původní heslo"
-              @click:append="show3 = !show3"
-            ></v-text-field>
-
-            <v-text-field
-              v-model="newpassword1"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min]"
-              :type="show1 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Nové heslo"
-              hint="Nejméně 8 písmen"
-              @click:append="show1 = !show1"
-            ></v-text-field>
-
-            <v-text-field
-              v-model="newpassword2"
-              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min]"
-              :type="show2 ? 'text' : 'password'"
-              name="input-10-1"
-              label="Nové heslo znovu"
-              hint="Nejméně 8 písmen"
-              @click:append="show2 = !show2"
-            ></v-text-field>
-
-            <v-btn 
-              block 
-              style="margin-top:10px;"
-              v-on:click="changePass()"
+    <v-card max-width="800px" style="margin:0 auto;">
+      <v-card-title>
+        <h3 style="width:100%;text-align:center;">ZMĚNA HESLA</h3>
+      </v-card-title>
+      <v-form @submit.prevent="changePass" ref="form">
+        <v-container fluid>
+          <v-row>
+            <v-col
+              cols="12"
+              sm="6"
+              style="margin: 0 auto;"
             >
-              Změnit heslo
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
+            <v-text-field
+              v-model="email"
+              :emailRules="[emailRules]"
+              label="E-mail"
+              required
+            ></v-text-field>
+
+              <v-text-field
+                v-model="password"
+                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="show3 ? 'text' : 'password'"
+                name="input-10-1"
+                label="Původní heslo"
+                @click:append="show3 = !show3"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="newpassword1"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="show1 ? 'text' : 'password'"
+                name="input-10-1"
+                label="Nové heslo"
+                hint="Nejméně 8 písmen"
+                @click:append="show1 = !show1"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="newpassword2"
+                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required, rules.min]"
+                :type="show2 ? 'text' : 'password'"
+                name="input-10-1"
+                label="Nové heslo znovu"
+                hint="Nejméně 8 písmen"
+                @click:append="show2 = !show2"
+              ></v-text-field>
+
+              <v-btn 
+                block 
+                style="margin-top:10px;"
+                v-on:click="changePass()"
+              >
+                Změnit heslo
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+    </v-card>
     <v-snackbar
     v-model="snackbar"
     :timeout="timeout"
@@ -67,7 +71,8 @@
 
       <template v-slot:action="{ attrs }">
         <v-btn
-          color="blue"
+          color="#001942"
+          style="color:#fff;"
           text
           v-bind="attrs"
           @click="snackbar = false"

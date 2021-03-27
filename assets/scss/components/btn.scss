@@ -1,0 +1,16 @@
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #66b3ff;
+  border-radius: 5px;
+}
+
+@media screen and (max-width:768px){
+  .btn{
+    min-height: 80px;
+    background-color: #66b3ff;
+    border-radius: 5px;
+  }
+}

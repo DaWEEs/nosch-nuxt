@@ -1,0 +1,10 @@
+.maintext{
+  text-align:center;
+  padding: 120px;
+}
+
+@media screen and (max-width:768px){
+  .maintext{
+    padding: 80px 15px !important;
+  }
+}

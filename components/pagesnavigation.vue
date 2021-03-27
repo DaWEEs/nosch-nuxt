@@ -23,34 +23,44 @@
             Úvod
           </NuxtLink>
         </li>
-        <li>
-          <NuxtLink :to="`/uchazec`">
-            Uchazeč
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="`/verejnost`">
-            Veřejnost
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="`/student`">
-            Student
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink :to="`/o-nas`">
-            O nás
-          </NuxtLink>
-        </li>
+        <li v-for="link in linky" :key="link.title">
+        <NuxtLink :to="`/${link.url}`">
+          {{link.title}}
+        </NuxtLink>
+      </li>
       </ul>
     </v-container>
   </nav>
 </template>
 
 <script>
+import {db, firebase} from '~/plugins/firebase.js'
+import 'firebase/auth'
+import 'firebase/firestore'
 export default {
+data: () => ({
+    linky:{
+        title:'',
+        text:"",
+        url:"",
+        checkbox:false,
+    },
+  }),
 
+  async created () {
+    this.initialize()
+  },
+
+  methods: {
+    async initialize () {
+      this.linky = [];
+      const result = await db.collection("stranky").where('checkbox', '==', true).get();
+      result.forEach(doc => {
+        //console.log(doc.id, '=>', doc.data());
+        this.linky.push(doc.data());
+      });
+    },
+  }
 }
 </script>
 

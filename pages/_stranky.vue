@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .prispevek{
+.prispevek{
     min-height:75vh;
     max-width:50%;
     margin:0 auto;
@@ -45,27 +45,30 @@ export default {
     h1{
       text-align:center;
       text-transform: uppercase;
-      padding-bottom: 25px;
     }
 
     p{
       padding: 15px 0;
+      & a{
+        text-decoration: none;
+        cursor: pointer;
+        &:link{
+          color:#000;
+        }
+        &:visited{
+          color:#000;
+        }
+      }
     }
+}
+</style>
 
-    img{
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width:auto;
-      height: auto;
-      max-width:100%;
-      max-height: 50vh;
+<style scoped lang="scss">
+.prispevek{
+  h1{
+    &:first-child{
+      padding-bottom: 20px;
     }
   }
-
-  @media screen and (max-width:768px){
-    .prispevek{
-      max-width:90%;
-    }
-  }
+}
 </style>

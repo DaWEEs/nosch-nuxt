@@ -12,6 +12,46 @@
     <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
   </div>  
 
+  <v-file-input
+    v-model="files"
+    color="#001942"
+    label="Přiložení souborů"
+    multiple
+    placeholder="Vyberte soubory"
+    prepend-icon="mdi-paperclip"
+    outlined
+  >
+    <template v-slot:selection="{ index, text }">
+      <v-chip
+        v-if="index < 2"
+        color="#001942"
+        dark
+        label
+        small
+      >
+        {{ text }}
+      </v-chip>
+
+      <span
+        v-else-if="index === 2"
+        class="overline grey--text text--darken-3 mx-2"
+      >
+        +{{ files.length - 2 }} Souborů
+      </span>
+    </template>
+  </v-file-input>
+
+  <v-checkbox
+      v-model="stranky.checkbox"
+      :label="`Zobrazit v navigaci`"
+  ></v-checkbox>
+
+  <div style="padding-bottom:30px;">
+    <v-btn v-on:click="addstranky()">
+      Přidat stránku
+    </v-btn>
+  </div>
+
   <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-header>
@@ -32,13 +72,6 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
-
-  <div style="padding-top: 50px;">
-    <v-btn v-on:click="addstranky()">
-      Přidat stránku
-    </v-btn>
-  </div>
-
 
   <v-snackbar
     v-model="snackbar"
@@ -63,6 +96,7 @@
 <script>
 import Vuetify from 'vuetify/lib'
 import firebase from 'firebase/app';
+import "firebase/storage";
   //import editoru
   import {
     // component
@@ -127,8 +161,10 @@ data: () => ({
         title:'',
         text:"",
         url:"",
+        checkbox:false,
     },
 
+    files: [],
 
     snackbar:false,
     timeout:2000,
@@ -235,6 +271,12 @@ data: () => ({
       }
       this.stranky.url = removeDiacritics(this.stranky.title).toLowerCase()
       this.stranky.text = this.content;
+      for(let i = 0; i < this.files.length; i++){
+        const ref = firebase.storage().ref("/"+`${this.stranky.url}`).child(`${this.files[i].name}`)
+        ref.put(this.files[i]).then((snapshot) => {
+
+        });
+      }
       firebase.firestore()
       .collection("stranky")
       .doc(this.stranky.url)

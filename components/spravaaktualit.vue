@@ -31,11 +31,12 @@
           <v-spacer />
           <v-dialog
             v-model="dialog"
-            max-width="1000px"
+            fullscreen
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="#64B5F6"
+                color="#001942"
+                  style="color:#fff;"
                 dark
                 class="mb-2"
                 v-bind="attrs"
@@ -66,7 +67,7 @@
           </v-dialog>
           <v-dialog
             v-model="dialogEdit"
-            max-width="1000px"
+            fullscreen
           >
             <v-card>
               <v-card-title>
@@ -86,13 +87,15 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog v-model="dialogDelete" fullscreen>
             <v-card>
-              <v-card-title class="headline">Opravdu chcete smazat tuto aktualitu?</v-card-title>
+              <v-card-title class="headline">
+                <p class="text-center" style="width:100%;">Opravdu chcete smazat tuto aktualitu?</p>
+              </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Ano</v-btn>
-                <v-btn color="blue darken-1" text @click="closeDelete">Ne</v-btn>
+                <v-btn color="#001942" text @click="deleteItemConfirm">Ano</v-btn>
+                <v-btn color="#001942" text @click="closeDelete">Ne</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -116,7 +119,8 @@
       </template>
       <template v-slot:no-data>
         <v-btn
-          color="#64B5F6"
+          color="#001942"
+                  style="color:#fff;"
           @click="initialize"
         >
           Načíst znovu
@@ -139,6 +143,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    dialogEdit: false,
     headers: [
       {
         text: 'Název aktuality',

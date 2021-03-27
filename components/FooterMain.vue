@@ -18,14 +18,14 @@
         <div>
           <v-btn
             v-for="icon in icons"
-            :key="icon.name"
+            :key="icon.title"
             class="mx-4"
             dark
             icon
           >
             <a :href='icon.url'>
               <v-icon size="24px">
-                {{ icon.name }}
+                {{ icon.icon }}
               </v-icon>
             </a>
           </v-btn>
@@ -48,43 +48,15 @@
           </ul>
         </v-col>
         <v-col>
-          <ul class="center">
-            <li>
-              <strong>Střední odborná škola NET OFFICE Orlová, spol. s r.o.</strong>
-            </li>
-            <li>
-              Energetiků 144, 735 14 Orlová – Lutyně
-            </li>
-            <li>
-              Datová schránka: n3q8ki6
-            </li>
-          </ul>
-        </v-col>
-        <v-col>
           <ul class="right">
             <li>
               <NuxtLink :to="`/`">
                 Úvod
               </NuxtLink>
             </li>
-            <li>
-              <NuxtLink :to="`/uchazec`">
-                Uchazeč
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink :to="`/verejnost`">
-                Veřejnost
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink :to="`/student`">
-                Student
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink :to="`/o-nas`">
-                O nás
+            <li v-for="link in linky" :key="link.title">
+              <NuxtLink :to="`/${link.url}`">
+                {{link.title}}
               </NuxtLink>
             </li>
           </ul>
@@ -105,16 +77,23 @@ import 'firebase/auth'
 import 'firebase/firestore'
 export default {
   data: () => ({
-      icons: [
-        {name:'mdi-facebook',url:"https://www.facebook.com/sosnetoffice/"},
-        {name:'mdi-instagram',url:"https://www.instagram.com/sosnetoffice/"},
-        {name:'mdi-linkedin',url:"https://www.linkedin.com/company/so%C5%A1-net-office/"},
-      ],
+      icons: {
+        title:"",
+        icon:"",
+        link:"",
+      },
 
       contacts:{
         value:"",
         icon:""
-      }
+      },
+
+      linky:{
+        title:'',
+        text:"",
+        url:"",
+        checkbox:false,
+      },
     }),
 
   async created () {
@@ -124,10 +103,24 @@ export default {
   methods:{
     async initialize () {
       this.contacts = [];
-      const result = await db.collection('udaje').get();
+      const result = await db.collection('udaje').where("value", "!=", "").get();
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.contacts.push(doc.data());
+      });
+
+      this.icons = [];
+      const result2 = await db.collection('socsite').where("link", "!=", "").get();
+      result2.forEach(doc => {
+        //console.log(doc.id, '=>', doc.data());
+        this.icons.push(doc.data());
+      });
+
+      this.linky = [];
+      const result3 = await db.collection("stranky").where('checkbox', '==', true).get();
+      result3.forEach(doc => {
+        //console.log(doc.id, '=>', doc.data());
+        this.linky.push(doc.data());
       });
     }
   }

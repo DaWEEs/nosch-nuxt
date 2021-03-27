@@ -1,0 +1,38 @@
+.prispevekpreview{
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style-type: none;
+  margin-top:20px;
+
+  & li{
+    width:100%;
+    margin: 0px;
+    padding-right:15px;
+
+    & a{
+    text-decoration: none;
+    color:#fff;
+
+      &:link{
+        text-decoration: none;
+        color:#fff;
+      }
+
+      &:visited{
+        text-decoration: none;
+        color:#fff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width:768px){
+  .prispevekpreview{
+    flex-wrap:wrap;
+      & li{
+        padding-right:0;
+        padding-top: 15px;
+      }
+  }
+}

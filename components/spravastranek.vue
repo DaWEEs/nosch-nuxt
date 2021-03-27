@@ -30,12 +30,13 @@
           ></v-text-field>
           <v-spacer />
           <v-dialog
-            v-model="dialog"
-            max-width="1000px"
+            v-model="dialog1"
+            fullscreen
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="#64B5F6"
+                color="#001942"
+                style="color:#fff;"
                 dark
                 class="mb-2"
                 v-bind="attrs"
@@ -65,8 +66,8 @@
             </v-card>
           </v-dialog>
           <v-dialog
-            v-model="dialogEdit"
-            max-width="1000px"
+            v-model="dialogEdit1"
+            fullscreen
           >
             <v-card>
               <v-card-title>
@@ -82,17 +83,17 @@
               </v-card-actions>
               </v-card-title>
               <v-card-text>
-                <editstranka :propTitle="editedItem.title" :propUrl="editedItem.url" :propText="editedItem.text"/>
+                <editstranka :propTitle="editedItem.title" :propUrl="editedItem.url" :propText="editedItem.text" :propCheck="editedItem.checkbox"/>
               </v-card-text>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog v-model="dialogDelete1" fullscreen>
             <v-card>
               <v-card-title class="headline">Opravdu chcete smazat tuto stránku?</v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Ano</v-btn>
-                <v-btn color="blue darken-1" text @click="closeDelete">Ne</v-btn>
+                <v-btn color="#001942" text @click="deleteItemConfirm">Ano</v-btn>
+                <v-btn color="#001942" text @click="closeDelete">Ne</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -116,7 +117,8 @@
       </template>
       <template v-slot:no-data>
         <v-btn
-          color="#64B5F6"
+          color="#001942"
+          style="color:#fff;"
           @click="initialize"
         >
           Načíst znovu
@@ -128,16 +130,19 @@
 </template>
 
 <script>
-import {db, firebase} from '~/plugins/firebase.js'
+import {db} from '~/plugins/firebase.js'
+import firebase from 'firebase/app';
 import 'firebase/auth'
 import 'firebase/firestore'
+import "firebase/storage";
 import Novastranka from './novastranka.vue'
 
 export default {
   components: {Novastranka },
   data: () => ({
-    dialog: false,
-    dialogDelete: false,
+    dialog1: false,
+    dialogDelete1: false,
+    dialogEdit1: false,
     headers: [
       { text: 'Název stránky', align: 'start', value: 'title', },
       { text: 'URL', value: 'url' },
@@ -149,11 +154,13 @@ export default {
       text: '',
       title: '',
       url: '',
+      checkbox: false,
     },
     defaultItem: {
       text:'',
       title: '',
       url: '',
+      checkbox:false,
     },
     search: '',
   }),
@@ -165,13 +172,13 @@ export default {
   },
 
   watch: {
-    dialog (val) {
+    dialog1 (val) {
       val || this.close()
     },
-    dialogEdit (val) {
+    dialogEdit1 (val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete1 (val) {
       val || this.closeDelete()
     },
   },
@@ -187,32 +194,47 @@ export default {
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.stranky.push(doc.data());
-        console.log(this.stranky);
       });
     },
 
     editItem (item) {
       this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.dialogEdit = true
+      this.dialogEdit1 = true
     },
 
     deleteItem (item) {
       this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+      this.dialogDelete1 = true
+      console.log(this.editedItem)
     },
 
     async deleteItemConfirm() {
       this.stranky.splice(this.editedIndex, 1)
+      const storageRef = firebase.storage().ref();
+      var listRef = storageRef.child(`/${this.editedItem.url}`);
+      // Find all the prefixes and items.
+      listRef.listAll()
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          var desertRef = storageRef.child(`${itemRef.fullPath}`);
+          // Delete the file
+          desertRef.delete().then(() => {
+          }).catch((error) => {
+          });
+        });
+      }).catch((error) => {
+        // Uh-oh, an error occurred!
+      });
       const sma = await db.collection('stranky').doc(this.editedItem.url);
       sma.delete();
       this.closeDelete()
     },
 
     close () {
-      this.dialog = false
-      this.dialogEdit = false
+      this.dialog1 = false
+      this.dialogEdit1 = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -220,7 +242,7 @@ export default {
     },
 
     closeDelete () {
-      this.dialogDelete = false
+      this.dialogDelete1 = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -293,6 +315,6 @@ export default {
 }*/
 </script>
 
-<style>
-
+<style lang="scss">
+  
 </style>

@@ -86,3 +86,15 @@ export default {
     }
   }
 </style>
+
+<style lang="scss" scoped>
+.prispevek{
+  h1{
+      text-align:center;
+      text-transform: uppercase;
+      &:first-child{
+        padding-bottom:0;
+      }
+    }
+  }
+</style>
