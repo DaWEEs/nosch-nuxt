@@ -231,6 +231,7 @@ data: () => ({
         value => (value && value.length >= 3) || 'Minimálně 3 písmena',
       ],
 
+    files:[],
     editedIndex: -1,
     dialog1: false,
     dialogDelete1: false,
@@ -248,6 +249,7 @@ data: () => ({
     defaultItem: [],
     snackbar:false,
     timeout:2000,
+    search:"",
   }),
 
   async created () {

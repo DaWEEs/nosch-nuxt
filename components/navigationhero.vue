@@ -29,7 +29,7 @@ data: () => ({
     },
   }),
 
-  async created () {
+  async fetch () {
     this.initialize()
   },
 

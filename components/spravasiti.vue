@@ -99,6 +99,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    dialogEdit: false,
     headers: [
       { text: 'Název soc. sítě', align: 'start', value: 'title', },
       { text: 'Akce', value: 'actions', sortable: false },
@@ -152,7 +153,6 @@ export default {
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.stranky.push(doc.data());
-        console.log(this.stranky);
       });
     },
 

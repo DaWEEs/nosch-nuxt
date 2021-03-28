@@ -1,5 +1,6 @@
 <template>
-  <v-app>
+<div id="app">
+  <v-app id="inspire">
     <v-data-table
       :headers="headers"
       :items="stranky"
@@ -94,7 +95,8 @@
         </v-btn>
       </template>
     </v-data-table>
-</v-app>
+  </v-app>
+</div>
 </template>
 
 <script>
@@ -107,6 +109,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    dialogEdit: false,
     headers: [
       { text: 'Název kontaktu', align: 'start', value: 'title', },
       { text: 'Akce', value: 'actions', sortable: false },
@@ -160,7 +163,7 @@ export default {
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.stranky.push(doc.data());
-        console.log(this.stranky);
+
       });
     },
 
@@ -197,7 +200,6 @@ export default {
       this.editStranka.value = this.editedItem.value
       this.editStranka.icon = this.editedItem.icon
       this.editStranka.title = this.editedItem.title
-      console.log(this.editStranka)
       firebase.firestore()
       .collection("udaje")
       .doc(this.editStranka.title)

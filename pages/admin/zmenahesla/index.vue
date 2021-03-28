@@ -10,7 +10,7 @@
     <v-toolbar
         color="#001942"
     >
-      <v-toolbar-title><h3 style="color:#fff;">ADMIN PANEL - DASHBOARD</h3></v-toolbar-title>
+      <v-toolbar-title><h3 style="color:#fff;">ADMIN PANEL - ZMĚNA HESLA</h3></v-toolbar-title>
       <v-spacer></v-spacer>
        <!--<v-btn
             fab
@@ -85,54 +85,8 @@
         </v-tab>
       </a>
 
-      <!--Dashboard-->
-      <v-tab-item :eager="false">
-        <v-card flat>
-          <v-card-text>
-            
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <!--Správa aktualit-->
-      <v-tab-item :eager="false">
-        <v-card flat>
-          <v-card-text>
-            <spravaaktualit />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
-
-      <!--Správa stránek-->
-      <v-tab-item :eager="false">
-        <v-card flat>
-          <v-card-text>
-            <spravastranek />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <!--Správa stránek-->
-      <v-tab-item :eager="false">
-        <v-card flat>
-          <v-card-text>
-            <spravakontaktu />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <!--Správa stránek-->
-      <v-tab-item :eager="false">
-        <v-card flat>
-          <v-card-text>
-            <spravasiti />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-
       <!--Správa uživatele-->
-      <v-tab-item :eager="false">
+      <v-tab-item :eager="true">
         <v-card flat>
           <v-card-text>
             <spravauzivatele />
@@ -214,8 +168,6 @@ a{
     color:rgba(0, 0, 0, 0.54);
   }
 }
-
- 
 
 .v-dialog__container--active {
     display: block; 

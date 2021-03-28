@@ -10,6 +10,14 @@
       </v-row>
   
     <h1 style="text-transform:uppercase;">Aktuality</h1>
+    <v-lazy
+        v-model="isActive"
+        :options="{
+          threshold: .5
+        }"
+        min-height="200"
+        transition="fade-transition"
+    >
     <ul class="prispevekpreview">
       <li v-for="prispevek in prispevky" :key="prispevek.title" class="aktuality">
         <Nuxt-link :to="`/prispevky/${prispevek.url}`">
@@ -36,6 +44,7 @@
         </nuxt-link>
       </li>
     </ul>
+    </v-lazy>
 
     </v-container>
   </div>

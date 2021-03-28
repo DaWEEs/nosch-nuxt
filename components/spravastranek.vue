@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <v-app id="inspire">
+   <v-app id="inspire">
     <v-data-table
       :headers="headers"
       :items="stranky"
@@ -30,7 +30,7 @@
           ></v-text-field>
           <v-spacer />
           <v-dialog
-            v-model="dialog1"
+            v-model="dialog"
             fullscreen
           >
             <template v-slot:activator="{ on, attrs }">
@@ -66,7 +66,7 @@
             </v-card>
           </v-dialog>
           <v-dialog
-            v-model="dialogEdit1"
+            v-model="dialogEdit"
             fullscreen
           >
             <v-card>
@@ -87,7 +87,7 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogDelete1" fullscreen>
+          <v-dialog v-model="dialogDelete" fullscreen>
             <v-card>
               <v-card-title class="headline">Opravdu chcete smazat tuto stránku?</v-card-title>
               <v-card-actions>
@@ -140,9 +140,9 @@ import Novastranka from './novastranka.vue'
 export default {
   components: {Novastranka },
   data: () => ({
-    dialog1: false,
-    dialogDelete1: false,
-    dialogEdit1: false,
+    dialog: false,
+    dialogDelete: false,
+    dialogEdit: false,
     headers: [
       { text: 'Název stránky', align: 'start', value: 'title', },
       { text: 'URL', value: 'url' },
@@ -172,13 +172,13 @@ export default {
   },
 
   watch: {
-    dialog1 (val) {
+    dialog (val) {
       val || this.close()
     },
-    dialogEdit1 (val) {
+    dialogEdit (val) {
       val || this.close()
     },
-    dialogDelete1 (val) {
+    dialogDelete (val) {
       val || this.closeDelete()
     },
   },
@@ -200,13 +200,13 @@ export default {
     editItem (item) {
       this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.dialogEdit1 = true
+      this.dialogEdit = true
     },
 
     deleteItem (item) {
       this.editedIndex = this.stranky.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      this.dialogDelete1 = true
+      this.dialogDelete = true
       console.log(this.editedItem)
     },
 
@@ -233,8 +233,8 @@ export default {
     },
 
     close () {
-      this.dialog1 = false
-      this.dialogEdit1 = false
+      this.dialog = false
+      this.dialogEdit = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -242,7 +242,7 @@ export default {
     },
 
     closeDelete () {
-      this.dialogDelete1 = false
+      this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
