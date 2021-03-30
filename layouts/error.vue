@@ -1,44 +1,59 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Vrátit se na domovskou stránku
-    </NuxtLink>
-  </v-app>
+  <div class="prispevek">
+    <v-container>
+      <h1>Stránka nenalezena :(</h1>
+      <p style='text-align:center;'><a href='/'>Zpět na hlavní stránku</a></p>
+    </v-container>
+  </div>
 </template>
 
 <script>
+import {db, firebase} from '~/plugins/firebase.js'
+import 'firebase/auth'
+import 'firebase/firestore'
+import FooterMain from '~/components/FooterMain.vue'
+import pagesnavigation from '~/components/pagesnavigation.vue'
+
 export default {
-  layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  data () {
-    return {
-      pageNotFound: 'Stránka nebyla nalezena.',
-      otherError: 'Jejda! Něco se nepovedlo :('
-    }
-  },
-  head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  }
+  components: { pagesnavigation, FooterMain },
+  layout: 'pages',
 }
 </script>
 
-<style scoped>
-h1 {
-  font-size: 20px;
+<style lang="scss">
+.prispevek{
+    min-height:75vh;
+    max-width:70%;
+    margin:0 auto;
+    margin-top: 100px;
+
+    h1{
+      text-align:center;
+      text-transform: uppercase;
+    }
+
+    p{
+      padding: 15px 0;
+      & a{
+        text-decoration: underline;
+        cursor: pointer;
+        &:link{
+          color:$secondary-color;
+        }
+        &:visited{
+          color:$secondary-color;
+        }
+      }
+    }
+}
+</style>
+
+<style scoped lang="scss">
+.prispevek{
+  h1{
+    &:first-child{
+      padding-bottom: 20px;
+    }
+  }
 }
 </style>
