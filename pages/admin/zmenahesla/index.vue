@@ -83,6 +83,14 @@
         Dokumenty
       </v-tab>
       </Nuxt-link>
+            <Nuxt-link to="/admin/linky">
+      <v-tab>
+        <v-icon left>
+          mdi-link
+        </v-icon>
+        Link GDPR
+      </v-tab>
+      </Nuxt-link>
       <v-divider></v-divider>
       <a href="https://console.firebase.google.com/u/1/project/noschmaturita/" target="_blank">
         <v-tab>
