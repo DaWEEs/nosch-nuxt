@@ -23,6 +23,111 @@
     />
   </div>  
 
+    <v-file-input
+    v-model="files"
+    color="#001942"
+    label="Přiložení souborů"
+    multiple
+    placeholder="Vyberte soubory"
+    prepend-icon="mdi-paperclip"
+    outlined
+  >
+    <template v-slot:selection="{ index, text }">
+      <v-chip
+        v-if="index < 2"
+        color="#001942"
+        dark
+        label
+        small
+      >
+        {{ text }}
+      </v-chip>
+
+      <span
+        v-else-if="index === 2"
+        class="overline grey--text text--darken-3 mx-2"
+      >
+        +{{ files.length - 2 }} Souborů
+      </span>
+    </template>
+  </v-file-input>
+
+  <v-data-table
+      :headers="headers"
+      :items="soubory"
+      sort-by="date"
+      :sort-desc="true"
+      class="elevation-1"
+      :search="search"
+    > 
+      <template v-slot:top>
+        <v-toolbar
+          flat
+        >
+          <v-toolbar-title>SOUBORY</v-toolbar-title>
+          <v-icon
+             style="margin-left: 10px;"
+            @click="initialize()"
+            >
+              mdi-refresh
+            </v-icon>
+          <v-spacer />
+          <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Vyhledat"
+          single-line
+          hide-details
+          ></v-text-field>
+          <v-spacer />
+          <v-dialog v-model="dialogDelete1" fullscreen>
+            <v-card>
+              <v-card-title class="headline"><p class="text-center" style="width:100%;">Opravdu chcete smazat tento soubor?</p></v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="#001942" text @click="deleteItemConfirm">Ano</v-btn>
+                <v-btn color="#001942" text @click="closeDelete">Ne</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          small
+          @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:no-data>
+      <p>Žádná data nenalezena :(</p>
+        <v-btn
+          color="#001942"
+          style="color:#fff;"
+          @click="initialize"
+        >
+          Načíst znovu
+        </v-btn>
+      </template>
+    </v-data-table>
+
+    <v-row>
+      <v-col>
+        <v-checkbox
+            v-model="propForm"
+            :label="`Přidat formulář`"
+        ></v-checkbox>
+      </v-col>
+    </v-row>
+
+  <div style="padding: 20px 0;">
+    <v-btn block v-on:click="addaktualita()">
+      Uložit změny
+    </v-btn>
+  </div>
+
   <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-header>
@@ -43,14 +148,6 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
-
-
-  <div style="padding-top: 50px;">
-    <v-btn v-on:click="addaktualita()">
-      Uložit změny
-    </v-btn>
-  </div>
-
 
   <v-snackbar
     v-model="snackbar"
@@ -135,6 +232,12 @@ data: () => ({
       Image
     ],
 
+        
+    headers: [
+      { text: 'Název souboru', align: 'start', value: 'name', },
+      { text: 'Akce', value: 'actions', sortable: false },
+    ],
+
     rules: [
         value => !!value || 'Vyžadováno.',
         value => (value && value.length >= 3) || 'Minimálně 3 písmena',
@@ -146,7 +249,22 @@ data: () => ({
         text:"",
         url:"",
         date:"",
+        formular:false
     },
+
+    files:[],
+    editedIndex: -1,
+    dialog1: false,
+    dialogDelete1: false,
+    dialogEdit1: false,
+    content: "",
+    vysledek:"",
+    soubory:[],
+    editedItem: [],
+    defaultItem: [],
+    snackbar:false,
+    timeout:2000,
+    search:"",
 
 
     snackbar:false,
@@ -160,6 +278,13 @@ data: () => ({
       this.aktualita.title = this.propTitle;
       this.aktualita.shorttext = this.propShortText;
       this.aktualita.text = this.propText;
+      this.aktualita.formular = this.propForm;
+      for(let i = 0; i < this.files.length; i++){
+        const ref = firebase.storage().ref("/"+`${this.aktualita.url}`).child(`${this.files[i].name}`)
+        ref.put(this.files[i]).then((snapshot) => {
+
+        });
+      }
       firebase.firestore()
       .collection("prispevky")
       .doc(this.aktualita.url)
@@ -170,6 +295,61 @@ data: () => ({
         this.aktualita.text = "";
         this.aktualita.url = "";
         this.aktualita.date = "";
+      });
+    },
+    async deleteItemConfirm() {
+      this.soubory.splice(this.editedIndex, 1)
+      const storageRef = firebase.storage().ref();
+      var desertRef = storageRef.child(`${this.editedItem._delegate.fullPath}`);
+      // Delete the file
+      desertRef.delete().then(() => {
+        // File deleted successfully
+        this.vysledek = "Soubor byl úspěšně smazán"
+        this.snackbar = true;
+      }).catch((error) => {
+        // Uh-oh, an error occurred!
+        this.vysledek = "Někde se objevil problém"
+        this.snackbar = true;
+      });
+      this.closeDelete()
+    },
+
+    closeDelete () {
+      this.dialogDelete1 = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    deleteItem (item) {
+      this.editedIndex = this.soubory.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete1 = true
+    },
+
+    close () {
+      this.dialog1 = false
+      this.dialogEdit1 = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    async initialize(){
+      this.soubory = [] 
+      const storageRef = firebase.storage().ref();
+      var listRef = storageRef.child(`/${this.propUrl}`);
+      // Find all the prefixes and items.
+      listRef.listAll()
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          this.soubory.push(itemRef);
+          console.log(itemRef)
+        });
+      }).catch((error) => {
+        // Uh-oh, an error occurred!
       });
     }
   }

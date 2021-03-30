@@ -3,6 +3,13 @@
     <v-container>
       <h1>{{stranka[0].title}}</h1>
       <wp-content :html="stranka[0].text" />
+      <div v-if="stranka[0].formular">
+        <hr>
+        <div style="padding:30px 0;">
+          <h3 style="padding-bottom:20px;">Máte dotaz? Kontaktujte nás!</h3>
+          <formular />
+        </div>
+      </div>
     </v-container>
   </div>
 </template>
@@ -38,7 +45,7 @@ export default {
 <style lang="scss">
 .prispevek{
     min-height:75vh;
-    max-width:50%;
+    max-width:70%;
     margin:0 auto;
     margin-top: 100px;
 
@@ -50,13 +57,13 @@ export default {
     p{
       padding: 15px 0;
       & a{
-        text-decoration: none;
+        text-decoration: underline;
         cursor: pointer;
         &:link{
-          color:#000;
+          color:$secondary-color;
         }
         &:visited{
-          color:#000;
+          color:$secondary-color;
         }
       }
     }

@@ -41,10 +41,21 @@
     </template>
   </v-file-input>
 
-  <v-checkbox
-      v-model="stranky.checkbox"
-      :label="`Zobrazit v navigaci`"
-  ></v-checkbox>
+  <v-row>
+    <v-col>
+      <v-checkbox
+          v-model="stranky.checkbox"
+          :label="`Zobrazit v navigaci`"
+      ></v-checkbox>
+    </v-col>
+
+    <v-col>
+      <v-checkbox
+          v-model="stranky.formular"
+          :label="`Přidat formulář`"
+      ></v-checkbox>
+    </v-col>
+  </v-row>
 
   <div style="padding-bottom:30px;">
     <v-btn v-on:click="addstranky()">
@@ -162,6 +173,7 @@ data: () => ({
         text:"",
         url:"",
         checkbox:false,
+        formular:false,
     },
 
     files: [],
@@ -257,7 +269,7 @@ data: () => ({
           {'base':'x','letters':/[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g},
           {'base':'y','letters':/[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g},
           {'base':'z','letters':/[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g},
-          {'base':'-','letters':/[\u002C\uff0c\ufe10\ufe50\u1f101\u0020\u00a0]/g}
+          {'base':'-','letters':/[\u002C\uff0c\ufe10\ufe50\u1f101\u0020\u00a0\uff0f\u002f]/g}
       ];
       var changes;
       function removeDiacritics (str) {

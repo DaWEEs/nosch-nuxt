@@ -10,7 +10,7 @@
     <v-toolbar
         color="#001942"
     >
-      <v-toolbar-title><h3 style="color:#fff;">ADMIN PANEL - ZMĚNA HESLA</h3></v-toolbar-title>
+      <v-toolbar-title><h3 style="color:#fff;">ADMIN PANEL - DOKUMENTY</h3></v-toolbar-title>
       <v-spacer></v-spacer>
        <!--<v-btn
             fab
@@ -93,11 +93,11 @@
         </v-tab>
       </a>
 
-      <!--Správa uživatele-->
+      <!--Dashboard-->
       <v-tab-item :eager="true">
         <v-card flat>
           <v-card-text>
-            <spravauzivatele />
+            <spravasouboru />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -176,6 +176,8 @@ a{
     color:rgba(0, 0, 0, 0.54);
   }
 }
+
+ 
 
 .v-dialog__container--active {
     display: block; 

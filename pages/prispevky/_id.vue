@@ -4,9 +4,16 @@
       <h1>{{prispevek[0].title}}</h1>
       <p style="text-align:center; color:#808080;">{{prispevek[0].date}}</p>
       <wp-content :html="prispevek[0].text" />
+      <div v-if="prispevek[0].formular">
+      <hr>
+        <div style="padding:30px 0;">
+          <h3 style="padding-bottom:20px;">Máte dotaz? Kontaktujte nás!</h3>
+          <formular />
+        </div>
+      </div>
       <hr>
       <p style="text-align:right;">
-        <a @click="$router.go(-1)">
+        <a @click="$router.go(-1)" style="text-decoration:none;">
           <v-icon color="#000">mdi-arrow-left</v-icon>
           Vrátit se zpět
         </a>
@@ -46,7 +53,7 @@ export default {
 <style lang="scss">
   .prispevek{
     min-height:75vh;
-    max-width:50%;
+    max-width:70%;
     margin:0 auto;
     margin-top: 100px;
 
@@ -90,11 +97,14 @@ export default {
 <style lang="scss" scoped>
 .prispevek{
   h1{
-      text-align:center;
-      text-transform: uppercase;
-      &:first-child{
-        padding-bottom:0;
-      }
+    text-align:center;
+    text-transform: uppercase;
+    &:first-child{
+      padding-bottom:0;
     }
   }
+  a{
+    text-decoration:underline;
+  }
+}
 </style>

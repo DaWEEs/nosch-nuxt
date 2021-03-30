@@ -26,6 +26,14 @@
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
                   <v-spacer></v-spacer>
+                    <v-card-actions>
+                      <v-btn
+                        icon
+                        @click="close"
+                      >
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                  </v-card-actions>
                 </v-card-title>
               <v-card-text>
                 <v-container>
@@ -45,24 +53,18 @@
                   </v-row>
                 </v-container>
               </v-card-text>
-
+              <v-container>
               <v-card-actions>
-                <v-spacer></v-spacer>
                 <v-btn
                   color="#001942"
                   text
-                  @click="close"
-                >
-                  Zavřít
-                </v-btn>
-                <v-btn
-                  color="#001942"
-                  text
+                  block
                   @click="save"
                 >
                   Uložit
                 </v-btn>
               </v-card-actions>
+              </v-container>
             </v-card>
           </v-dialog>
         </v-toolbar>

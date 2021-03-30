@@ -19,6 +19,49 @@
     <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
   </div>  
 
+  <v-file-input
+    v-model="files"
+    color="#001942"
+    label="Přiložení souborů"
+    multiple
+    placeholder="Vyberte soubory"
+    prepend-icon="mdi-paperclip"
+    outlined
+  >
+    <template v-slot:selection="{ index, text }">
+      <v-chip
+        v-if="index < 2"
+        color="#001942"
+        dark
+        label
+        small
+      >
+        {{ text }}
+      </v-chip>
+
+      <span
+        v-else-if="index === 2"
+        class="overline grey--text text--darken-3 mx-2"
+      >
+        +{{ files.length - 2 }} Souborů
+      </span>
+    </template>
+  </v-file-input>
+  <v-row>
+    <v-col>
+      <v-checkbox
+          v-model="aktualita.formular"
+          :label="`Přidat formulář`"
+      ></v-checkbox>
+    </v-col>
+  </v-row>
+
+  <div style="padding: 20px 0;">
+    <v-btn block v-on:click="addaktualita()">
+      Přidat aktualitu
+    </v-btn>
+  </div>
+
   <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-header>
@@ -39,14 +82,6 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
-
-
-  <div style="padding-top: 50px;">
-    <v-btn v-on:click="addaktualita()">
-      Přidat aktualitu
-    </v-btn>
-  </div>
-
 
   <v-snackbar
     v-model="snackbar"
@@ -137,9 +172,10 @@ data: () => ({
         text:"",
         url:"",
         date:"",
+        formular: false,
     },
 
-
+    files: [],
     snackbar:false,
     timeout:2000,
   }),
@@ -231,7 +267,7 @@ data: () => ({
           {'base':'x','letters':/[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g},
           {'base':'y','letters':/[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g},
           {'base':'z','letters':/[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g},
-          {'base':'-','letters':/[\u002C\uff0c\ufe10\ufe50\u1f101\u0020\u00a0]/g}
+          {'base':'-','letters':/[\u002C\uff0c\ufe10\ufe50\u1f101\u0020\u00a0\uff0f\u002f]/g}
       ];
       var changes;
       function removeDiacritics (str) {
@@ -246,6 +282,12 @@ data: () => ({
       this.aktualita.url = removeDiacritics(this.aktualita.title).toLowerCase()
       this.aktualita.date = new Date().toJSON();
       this.aktualita.text = this.content;
+      for(let i = 0; i < this.files.length; i++){
+        const ref = firebase.storage().ref("/prispevky/"+`${this.aktualita.url}`).child(`${this.files[i].name}`)
+        ref.put(this.files[i]).then((snapshot) => {
+
+        });
+      }
       firebase.firestore()
       .collection("prispevky")
       .doc(this.aktualita.url)

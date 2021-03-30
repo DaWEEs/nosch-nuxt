@@ -12,7 +12,7 @@
         <v-toolbar
           flat
         >
-          <v-toolbar-title>KONTAKTY</v-toolbar-title>
+          <v-toolbar-title>LINKY</v-toolbar-title>
           <v-icon
              style="margin-left: 10px;"
             @click="initialize()"
@@ -38,14 +38,6 @@
                 </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-row>
-                      <v-text-field
-                        v-model="editedItem.icon"
-                        label="Ikona"
-                        :append-outer-icon="editedItem.icon"
-                      ></v-text-field>
-                  </v-row>
-                  <p>Hledáte názvy ikon? <a href="https://materialdesignicons.com/" target="_blank">https://materialdesignicons.com/</a></p>
                   <v-row>
                       <v-text-field
                         v-model="editedItem.value"
@@ -105,25 +97,22 @@ export default {
     dialogDelete: false,
     dialogEdit: false,
     headers: [
-      { text: 'Název kontaktu', align: 'start', value: 'title', },
+      { text: 'Název linku', align: 'start', value: 'id', },
       { text: 'Akce', value: 'actions', sortable: false },
     ],
     stranky: [],
     editStranka: {
-      icon: "",
-      title: "",
+      id:"",
       value: ""
     },
     editedIndex: -1,
     editedItem: {
-      icon: '',
-      title: '',
-      value: '',
+      id:"",
+      value: ""
     },
     defaultItem: {
-      icon: '',
-      title: '',
-      value: '',
+      id:"",
+      value: ""
     },
     search: '',
   }),
@@ -153,11 +142,10 @@ export default {
   methods: {
     async initialize () {
       this.stranky = [];
-      const result = await db.collection('udaje').get();
+      const result = await db.collection('linky').get();
       result.forEach(doc => {
         //console.log(doc.id, '=>', doc.data());
         this.stranky.push(doc.data());
-
       });
     },
 
@@ -191,12 +179,11 @@ export default {
     },
 
     save () {
+      this.editStranka.id = this.editedItem.id
       this.editStranka.value = this.editedItem.value
-      this.editStranka.icon = this.editedItem.icon
-      this.editStranka.title = this.editedItem.title
       firebase.firestore()
-      .collection("udaje")
-      .doc(this.editStranka.title)
+      .collection("linky")
+      .doc(this.editStranka.id)
       .set(this.editStranka)
       .then(()=>{
         this.close();

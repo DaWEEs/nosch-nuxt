@@ -57,7 +57,7 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-card-actions>
-              </v-card-title>
+            </v-card-title>
   
               <v-card-text>
                 <novaaktualita />
@@ -162,6 +162,7 @@ export default {
       url: '',
       date: '',
       text: '',
+      formular: false,
     },
     defaultItem: {
       title: '',
@@ -169,6 +170,7 @@ export default {
       url: '',
       date: '',
       text: '',
+      formular: false,
     },
     search: '',
   }),

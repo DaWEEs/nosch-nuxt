@@ -75,7 +75,7 @@
           <v-spacer />
           <v-dialog v-model="dialogDelete1" fullscreen>
             <v-card>
-              <v-card-title class="headline">Opravdu chcete smazat tento soubor?</v-card-title>
+              <v-card-title class="headline"><p class="text-center" style="width:100%;">Opravdu chcete smazat tento soubor?</p></v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="#001942" text @click="deleteItemConfirm">Ano</v-btn>
@@ -95,6 +95,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
+      <p>Žádná data nenalezena :(</p>
         <v-btn
           color="#001942"
           style="color:#fff;"
@@ -104,14 +105,23 @@
         </v-btn>
       </template>
     </v-data-table>
+<v-row>
+  <v-col>
+    <v-checkbox
+        v-model="propCheck"
+        :label="`Zobrazit v navigaci`"
+    ></v-checkbox>
+  </v-col>
+  <v-col>
+    <v-checkbox
+        v-model="propForm"
+        :label="`Přidat formulář`"
+    ></v-checkbox>
+  </v-col>
+</v-row>
 
-  <v-checkbox
-      v-model="propCheck"
-      :label="`Zobrazit v navigaci`"
-  ></v-checkbox>
-
-  <div style="padding-bottom:30px;">
-    <v-btn v-on:click="addstranky()">
+  <div style="padding:20px 0;">
+    <v-btn block v-on:click="addstranky()">
       Editovat stránku
     </v-btn>
   </div>
@@ -191,6 +201,7 @@ props:[
   "propText",
   "propUrl",
   "propCheck",
+  "propForm"
 ],
 data: () => ({
     extensions: [

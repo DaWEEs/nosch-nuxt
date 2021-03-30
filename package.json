@@ -27,6 +27,7 @@
     "jwt-parser": "^2.0.0",
     "net": "^1.0.2",
     "nuxt": "^2.14.6",
+    "nuxt-clipboard2": "^0.2.1",
     "sass-loader": "^10.1.1",
     "tiptap-vuetify": "^2.24.0",
     "tls": "^0.0.1"

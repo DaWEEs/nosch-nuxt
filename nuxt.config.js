@@ -65,7 +65,8 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-clipboard2',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

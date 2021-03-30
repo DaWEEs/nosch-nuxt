@@ -32,7 +32,7 @@
           <v-icon left>
             mdi-account
           </v-icon>
-          Dashboard
+          Zprávy z formuláře
         </v-tab>
       </Nuxt-link>
       <Nuxt-link to='/admin/aktuality'>
@@ -73,6 +73,14 @@
           mdi-form-textbox-password
         </v-icon>
         Změna hesla
+      </v-tab>
+      </Nuxt-link>
+      <Nuxt-link to="/admin/dokumenty">
+      <v-tab>
+        <v-icon left>
+          mdi-file-document-outline
+        </v-icon>
+        Dokumenty
       </v-tab>
       </Nuxt-link>
       <v-divider></v-divider>

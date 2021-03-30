@@ -3,9 +3,7 @@
    <v-app id="inspire">
     <v-data-table
       :headers="headers"
-      :items="stranky"
-      sort-by="date"
-      :sort-desc="true"
+      :items="soubory"
       class="elevation-1"
       :search="search"
     >
@@ -13,7 +11,7 @@
         <v-toolbar
           flat
         >
-          <v-toolbar-title>STRÁNKY</v-toolbar-title>
+          <v-toolbar-title>DOKUMENTY</v-toolbar-title>
           <v-icon
              style="margin-left: 10px;"
             @click="initialize()"
@@ -30,7 +28,7 @@
           ></v-text-field>
           <v-spacer />
           <v-dialog
-            v-model="dialog"
+            v-model="dialog1"
             fullscreen
           >
             <template v-slot:activator="{ on, attrs }">
@@ -42,12 +40,12 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                Nová stránka
+                Přidat soubor
               </v-btn>
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">Nová stránka</span>
+                <span class="headline">Přidat soubor</span>
                 <v-spacer></v-spacer>
                 <v-card-actions>
                 <v-btn
@@ -60,34 +58,34 @@
               </v-card-title>
   
               <v-card-text>
-                <novastranka />
-              </v-card-text>
-  
-            </v-card>
-          </v-dialog>
-          <v-dialog
-            v-model="dialogEdit"
-            fullscreen
-          >
-            <v-card>
-              <v-card-title>
-                <span class="headline">Editovat stránku</span>
-                <v-spacer></v-spacer>
-                <v-card-actions>
-                <v-btn
-                  icon
-                  @click="close"
+                <v-file-input
+                  v-model="files"
+                  placeholder="Zde nahrajte soubory"
+                  label="Zde nahrajte soubory"
+                  multiple
+                  prepend-icon="mdi-paperclip"
                 >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </v-card-actions>
-              </v-card-title>
-              <v-card-text>
-                <editstranka :propTitle="editedItem.title" :propUrl="editedItem.url" :propText="editedItem.text" :propCheck="editedItem.checkbox" :propForm="editedItem.formular"/>
+                  <template v-slot:selection="{ text }">
+                    <v-chip
+                      small
+                      label
+                      color="primary"
+                    >
+                      {{ text }}
+                    </v-chip>
+                  </template>
+                </v-file-input>
               </v-card-text>
+
+              <v-btn
+                block
+                @click="addsoubor()"
+              >
+                Přidat soubory
+              </v-btn>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogDelete" fullscreen>
+          <v-dialog v-model="dialogDelete1" fullscreen>
             <v-card>
               <v-card-title class="headline"><p class="text-center" style="width:100%;">Opravdu chcete smazat tuto stránku?</p></v-card-title>
               <v-card-actions>
@@ -106,7 +104,7 @@
           class="mr-2"
           @click="editItem(item)"
         >
-          mdi-pencil
+          mdi-content-copy
         </v-icon>
         <v-icon
           small
@@ -126,6 +124,23 @@
       </template>
     </v-data-table>
   </v-app>
+  <v-snackbar
+    v-model="snackbar"
+    :timeout="timeout"
+  >
+    {{snackbarText}}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        color="blue"
+        text
+        v-bind="attrs"
+        @click="snackbar = false"
+      >
+        Zavřít
+      </v-btn>
+    </template>
+  </v-snackbar>
 </div>
 </template>
 
@@ -135,36 +150,42 @@ import firebase from 'firebase/app';
 import 'firebase/auth'
 import 'firebase/firestore'
 import "firebase/storage";
-import Novastranka from './novastranka.vue'
 
 export default {
-  components: {Novastranka },
   data: () => ({
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
     headers: [
-      { text: 'Název stránky', align: 'start', value: 'title', },
-      { text: 'URL', value: 'url' },
+      { text: 'Název souboru', align: 'start', value: 'name', },
       { text: 'Akce', value: 'actions', sortable: false },
     ],
-    stranky: [],
+    files:[],
     editedIndex: -1,
+    dialog1: false,
+    dialogDelete1: false,
+    dialogEdit1: false,
+    content: "",
+    vysledek:"",
+    soubory:[{
+      bucket: "",
+      fullPath: "",
+      name: ""
+    }],
     editedItem: {
-      text: '',
-      title: '',
-      url: '',
-      checkbox: false,
-      formular: false
+      bucket: "",
+      fullPath: "",
+      name: ""
     },
     defaultItem: {
-      text:'',
-      title: '',
-      url: '',
-      checkbox:false,
-      formular: false
+      bucket: "",
+      fullPath: "",
+      name: ""
     },
-    search: '',
+    snackbar:false,
+    snackbarText:"",
+    timeout:2000,
+    search:"",
   }),
 
   computed: {
@@ -185,58 +206,84 @@ export default {
     },
   },
 
-  async created () {
+  async mounted () {
     this.initialize()
   },
 
   methods: {
+    addsoubor(){
+      for(let i = 0; i < this.files.length; i++){
+        const ref = firebase.storage().ref("/soubory").child(`${this.files[i].name}`)
+        ref.put(this.files[i]).then((snapshot) => {
+
+        });
+      }
+      this.files = []
+      this.snackbarText = "Soubory byly úspěšně nahrány."
+      this.snackbar = true
+      this.close()
+    },
+
     async initialize () {
-      this.stranky = [];
-      const result = await db.collection('stranky').get();
-      result.forEach(doc => {
-        //console.log(doc.id, '=>', doc.data());
-        this.stranky.push(doc.data());
-      });
-    },
-
-    editItem (item) {
-      this.editedIndex = this.stranky.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogEdit = true
-    },
-
-    deleteItem (item) {
-      this.editedIndex = this.stranky.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
-      console.log(this.editedItem)
-    },
-
-    async deleteItemConfirm() {
-      this.stranky.splice(this.editedIndex, 1)
+      this.soubory = [] 
       const storageRef = firebase.storage().ref();
-      var listRef = storageRef.child(`/${this.editedItem.url}`);
+      var listRef = storageRef.child(`/soubory`);
       // Find all the prefixes and items.
       listRef.listAll()
       .then((res) => {
         res.items.forEach((itemRef) => {
-          var desertRef = storageRef.child(`${itemRef.fullPath}`);
-          // Delete the file
-          desertRef.delete().then(() => {
-          }).catch((error) => {
-          });
+          this.soubory.push(itemRef);
+          console.log(itemRef)
         });
       }).catch((error) => {
         // Uh-oh, an error occurred!
       });
-      const sma = await db.collection('stranky').doc(this.editedItem.url);
-      sma.delete();
+    },
+
+    editItem (item) {
+      this.editedIndex = this.soubory.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      console.log(this.editedItem)
+      const storageRef = firebase.storage().ref();
+      storageRef.child(this.editedItem._delegate.fullPath).getDownloadURL()
+      .then((url) => {
+        try {
+          this.$copyText(url);
+          this.snackbarText = "Link souboru byl zkopírován do schránky."
+          this.snackbar = true;
+        } catch (e) {
+          console.error(e);
+        }
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
+    },
+
+    deleteItem (item) {
+      this.editedIndex = this.soubory.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogDelete1 = true
+    },
+
+    async deleteItemConfirm() {
+      this.soubory.splice(this.editedIndex, 1)
+      const storageRef = firebase.storage().ref();
+      var desertRef = storageRef.child(this.editedItem._delegate.fullPath);
+      // Delete the file
+      desertRef.delete().then(() => {
+        this.snackbarText = "Soubor byl úspěšně smazán."
+        this.snackbar = true
+      }).catch((error) => {
+        this.snackbarText = "Soubor byl úspěšně smazán."
+        this.snackbar = true
+      });
       this.closeDelete()
     },
 
     close () {
-      this.dialog = false
-      this.dialogEdit = false
+      this.dialog1 = false
+      this.dialogEdit1 = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
@@ -244,7 +291,7 @@ export default {
     },
 
     closeDelete () {
-      this.dialogDelete = false
+      this.dialogDelete1 = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
