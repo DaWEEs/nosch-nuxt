@@ -23,7 +23,7 @@
             dark
             icon
           >
-            <a :href='icon.url'>
+            <a :href='`${icon.link}`'>
               <v-icon size="24px">
                 {{ icon.icon }}
               </v-icon>
