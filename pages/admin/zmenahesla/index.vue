@@ -68,7 +68,7 @@
       </v-tab>
       </Nuxt-link>
       <Nuxt-link to="/admin/zmenahesla">
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-form-textbox-password
         </v-icon>

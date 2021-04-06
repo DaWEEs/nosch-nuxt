@@ -36,7 +36,7 @@
         </v-tab>
       </Nuxt-link>
       <Nuxt-link to='/admin/aktuality'>
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-pen
         </v-icon>

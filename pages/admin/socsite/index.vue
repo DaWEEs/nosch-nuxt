@@ -60,7 +60,7 @@
       </v-tab>
       </Nuxt-link>
       <Nuxt-link to="/admin/socsite">
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-facebook
         </v-icon>

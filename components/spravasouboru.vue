@@ -98,7 +98,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
           class="mr-2"
@@ -233,7 +233,6 @@ export default {
       .then((res) => {
         res.items.forEach((itemRef) => {
           this.soubory.push(itemRef);
-          console.log(itemRef)
         });
       }).catch((error) => {
         // Uh-oh, an error occurred!
@@ -243,7 +242,6 @@ export default {
     editItem (item) {
       this.editedIndex = this.soubory.indexOf(item)
       this.editedItem = Object.assign({}, item)
-      console.log(this.editedItem)
       const storageRef = firebase.storage().ref();
       storageRef.child(this.editedItem._delegate.fullPath).getDownloadURL()
       .then((url) => {
@@ -272,10 +270,10 @@ export default {
       var desertRef = storageRef.child(this.editedItem._delegate.fullPath);
       // Delete the file
       desertRef.delete().then(() => {
-        this.snackbarText = "Soubor byl úspěšně smazán."
+        this.snackbarText = "Soubor byl úspěšně odstraněn."
         this.snackbar = true
       }).catch((error) => {
-        this.snackbarText = "Soubor byl úspěšně smazán."
+        this.snackbarText = "Ajaj, chyba. Soubor se nepodařilo odstranit."
         this.snackbar = true
       });
       this.closeDelete()

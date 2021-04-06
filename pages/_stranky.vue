@@ -67,6 +67,14 @@ export default {
         }
       }
     }
+
+    ul{
+      padding-left:30px;
+    }
+
+    ol{
+      padding-left:30px;
+    }
 }
 </style>
 

@@ -23,96 +23,6 @@
     />
   </div>  
 
-    <v-file-input
-    v-model="files"
-    color="#001942"
-    label="Přiložení souborů"
-    multiple
-    placeholder="Vyberte soubory"
-    prepend-icon="mdi-paperclip"
-    outlined
-  >
-    <template v-slot:selection="{ index, text }">
-      <v-chip
-        v-if="index < 2"
-        color="#001942"
-        dark
-        label
-        small
-      >
-        {{ text }}
-      </v-chip>
-
-      <span
-        v-else-if="index === 2"
-        class="overline grey--text text--darken-3 mx-2"
-      >
-        +{{ files.length - 2 }} Souborů
-      </span>
-    </template>
-  </v-file-input>
-
-  <v-data-table
-      :headers="headers"
-      :items="soubory"
-      sort-by="date"
-      :sort-desc="true"
-      class="elevation-1"
-      :search="search"
-    > 
-      <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-toolbar-title>SOUBORY</v-toolbar-title>
-          <v-icon
-             style="margin-left: 10px;"
-            @click="initialize()"
-            >
-              mdi-refresh
-            </v-icon>
-          <v-spacer />
-          <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Vyhledat"
-          single-line
-          hide-details
-          ></v-text-field>
-          <v-spacer />
-          <v-dialog v-model="dialogDelete1" fullscreen>
-            <v-card>
-              <v-card-title class="headline"><p class="text-center" style="width:100%;">Opravdu chcete smazat tento soubor?</p></v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#001942" text @click="deleteItemConfirm">Ano</v-btn>
-                <v-btn color="#001942" text @click="closeDelete">Ne</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:no-data>
-      <p>Žádná data nenalezena :(</p>
-        <v-btn
-          color="#001942"
-          style="color:#fff;"
-          @click="initialize"
-        >
-          Načíst znovu
-        </v-btn>
-      </template>
-    </v-data-table>
-
     <v-row>
       <v-col>
         <v-checkbox
@@ -201,7 +111,8 @@ props:[
   "propTitle",
   "propText",
   "propUrl",
-  "propShortText"
+  "propShortText",
+  "propForm"
 ],
 data: () => ({
     extensions: [
@@ -290,11 +201,8 @@ data: () => ({
       .doc(this.aktualita.url)
       .set(this.aktualita)
       .then(()=>{
+        this.vysledek = "Aktualita byla úspěšně editována"
         this.snackbar = true;
-        this.aktualita.title = "";
-        this.aktualita.text = "";
-        this.aktualita.url = "";
-        this.aktualita.date = "";
       });
     },
     async deleteItemConfirm() {

@@ -12,35 +12,6 @@
     <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
   </div>  
 
-  <v-file-input
-    v-model="files"
-    color="#001942"
-    label="Přiložení souborů"
-    multiple
-    placeholder="Vyberte soubory"
-    prepend-icon="mdi-paperclip"
-    outlined
-  >
-    <template v-slot:selection="{ index, text }">
-      <v-chip
-        v-if="index < 2"
-        color="#001942"
-        dark
-        label
-        small
-      >
-        {{ text }}
-      </v-chip>
-
-      <span
-        v-else-if="index === 2"
-        class="overline grey--text text--darken-3 mx-2"
-      >
-        +{{ files.length - 2 }} Souborů
-      </span>
-    </template>
-  </v-file-input>
-
   <v-row>
     <v-col>
       <v-checkbox
@@ -88,7 +59,7 @@
     v-model="snackbar"
     :timeout="timeout"
   >
-    Stránka byla úspěšně přidána
+    {{vysledek}}
 
     <template v-slot:action="{ attrs }">
       <v-btn
@@ -175,9 +146,6 @@ data: () => ({
         checkbox:false,
         formular:false,
     },
-
-    files: [],
-
     snackbar:false,
     timeout:2000,
   }),
@@ -283,21 +251,19 @@ data: () => ({
       }
       this.stranky.url = removeDiacritics(this.stranky.title).toLowerCase()
       this.stranky.text = this.content;
-      for(let i = 0; i < this.files.length; i++){
-        const ref = firebase.storage().ref("/"+`${this.stranky.url}`).child(`${this.files[i].name}`)
-        ref.put(this.files[i]).then((snapshot) => {
-
-        });
-      }
       firebase.firestore()
       .collection("stranky")
       .doc(this.stranky.url)
       .set(this.stranky)
       .then(()=>{
+        this.vysledek = "Stránka byla úspěšně přidána"
         this.snackbar = true;
         this.stranky.title = "";
         this.stranky.text = "";
         this.stranky.url = "";
+        this.content = "";
+        this.stranky.formular = false;
+        this.stranky.checkbox = false;
       });
     }
   }

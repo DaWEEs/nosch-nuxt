@@ -52,7 +52,7 @@
       </v-tab>
       </Nuxt-link>
       <Nuxt-link to="/admin/kontakty">
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-contacts
         </v-icon>

@@ -44,7 +44,7 @@
       </v-tab>
       </Nuxt-link>
       <Nuxt-link to="/admin/stranky">
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-pencil
         </v-icon>

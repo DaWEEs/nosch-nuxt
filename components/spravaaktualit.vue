@@ -83,7 +83,7 @@
               </v-card-actions>
               </v-card-title>
               <v-card-text>
-                <editaktualita :propText="editedItem.text" :propTitle="editedItem.title" :propShortText="editedItem.shorttext" :propUrl="editedItem.url"/>
+                <editaktualita :propText="editedItem.text" :propTitle="editedItem.title" :propShortText="editedItem.shorttext" :propUrl="editedItem.url" :propForm="editedItem.formular"/>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -102,7 +102,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
           class="mr-2"

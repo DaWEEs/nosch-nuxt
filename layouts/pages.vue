@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import quicknav from '~/components/quicknav.vue'
+
 import navigationhero from '~/components/navigationhero.vue'
 import FooterMain from '~/components/FooterMain.vue'
 import Pagesnavigation from '~/components/pagesnavigation.vue'
 export default {
   components: {
     navigationhero,
-    quicknav,
+    
     FooterMain,
     Pagesnavigation
 }

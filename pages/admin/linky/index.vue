@@ -84,7 +84,7 @@
       </v-tab>
       </Nuxt-link>
       <Nuxt-link to="/admin/linky">
-      <v-tab>
+      <v-tab disabled>
         <v-icon left>
           mdi-link
         </v-icon>

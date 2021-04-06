@@ -57,21 +57,21 @@ export default {
     margin:0 auto;
     margin-top: 100px;
 
-    h1{
+    & h1{
       text-align:center;
       text-transform: uppercase;
     }
 
-    p{
+    & p{
       padding: 15px 0;
       & a{
         text-decoration: none;
         cursor: pointer;
         &:link{
-          color:#000;
+          color:$secondary-color;
         }
         &:visited{
-          color:#000;
+          color:$secondary-color;
         }
       }
     }

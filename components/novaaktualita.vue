@@ -19,34 +19,6 @@
     <tiptap-vuetify v-model="content" :extensions="extensions" placeholder="Zde můžete začít psát svůj text." />
   </div>  
 
-  <v-file-input
-    v-model="files"
-    color="#001942"
-    label="Přiložení souborů"
-    multiple
-    placeholder="Vyberte soubory"
-    prepend-icon="mdi-paperclip"
-    outlined
-  >
-    <template v-slot:selection="{ index, text }">
-      <v-chip
-        v-if="index < 2"
-        color="#001942"
-        dark
-        label
-        small
-      >
-        {{ text }}
-      </v-chip>
-
-      <span
-        v-else-if="index === 2"
-        class="overline grey--text text--darken-3 mx-2"
-      >
-        +{{ files.length - 2 }} Souborů
-      </span>
-    </template>
-  </v-file-input>
   <v-row>
     <v-col>
       <v-checkbox
@@ -174,8 +146,6 @@ data: () => ({
         date:"",
         formular: false,
     },
-
-    files: [],
     snackbar:false,
     timeout:2000,
   }),
@@ -282,12 +252,6 @@ data: () => ({
       this.aktualita.url = removeDiacritics(this.aktualita.title).toLowerCase()
       this.aktualita.date = new Date().toJSON();
       this.aktualita.text = this.content;
-      for(let i = 0; i < this.files.length; i++){
-        const ref = firebase.storage().ref("/prispevky/"+`${this.aktualita.url}`).child(`${this.files[i].name}`)
-        ref.put(this.files[i]).then((snapshot) => {
-
-        });
-      }
       firebase.firestore()
       .collection("prispevky")
       .doc(this.aktualita.url)
@@ -300,6 +264,7 @@ data: () => ({
         this.aktualita.url = "";
         this.aktualita.date = "";
         this.content = "";
+        this.aktualita.formular = false;
       });
     }
   }

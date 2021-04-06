@@ -123,14 +123,14 @@ import 'firebase/firestore'
           .doc(this.zprava.id)
           .set(this.zprava)
           .then(()=>{
-            this.snackText = "Formulář byl úspěšně odeslán!"
+            this.snackText = "Formulář byl úspěšně odeslán! Odpovíme Vám, co nejdříve budeme moct. :)"
             this.snackbar = true;
             this.zprava.name=""
             this.zprava.email=""
             this.zprava.text=""
           });
         } else {
-            this.snackText = "Ověřte hodnoty zadané do formuláře!"
+            this.snackText = "Ověřte hodnoty zadané do formuláře a poté to zkuste znovu!"
             this.snackbar = true;
         }
       },

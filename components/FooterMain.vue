@@ -96,7 +96,7 @@ export default {
       },
     }),
 
-  async fetch () {
+  async created () {
     this.initialize()
   },
 
