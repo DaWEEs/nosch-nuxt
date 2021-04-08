@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - nuxt',
+    titleTemplate: '%s',
     title: 'Střední odborná škola NET OFFICE',
     htmlAttrs:{
       lang:'cs',
@@ -13,6 +13,7 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Webové stránky Střední odborné školy NET OFFICE Orlová spol. s.r.o' },
+      { hid: 'og:description', name: 'description', content: 'Webové stránky Střední odborné školy NET OFFICE Orlová spol. s.r.o' },
       { name:"msapplication-TileColor", content:"#2b5797"},
       { name:"theme-color", content:"#ffffff"},
     ],
@@ -38,7 +39,7 @@ export default {
   ],
 
   styleResources: {
-    scss: ['./assets/scss/*.scss']
+    scss: ['~/assets/scss/*.scss']
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
@@ -105,14 +106,9 @@ export default {
   }
   },
 
-  analytics: {
-    collectionEnabled: true // default
-  },
-
   services:{
     firestore: true,
     auth:true,
-    analytics: true,
     storage: true,
   },
 
@@ -135,8 +131,4 @@ export default {
     emulatorPort: 8080,
     emulatorHost: 'localhost',
   },
-
-  googleAnalytics: {
-    id: 'G-BRBD2PEP7S'
-  }
 }

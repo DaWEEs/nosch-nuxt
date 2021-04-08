@@ -8,9 +8,6 @@
 </template>
 
 <script>
-import {db, firebase} from '~/plugins/firebase.js'
-import 'firebase/auth'
-import 'firebase/firestore'
 import FooterMain from '~/components/FooterMain.vue'
 import pagesnavigation from '~/components/pagesnavigation.vue'
 

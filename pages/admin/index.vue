@@ -91,4 +91,8 @@ export default {
   .login {
     background-color:$main-color;
   }
+
+  .error{
+    color:white;
+  }
 </style>
