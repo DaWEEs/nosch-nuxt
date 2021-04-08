@@ -1,21 +1,21 @@
-# nuxt
-
+# Maturitní projekt
 ## Build Setup
-# postaveno na node verzi 12.18.1
+
+Mějte prosím na paměti, že pro spuštění potřebujete Node.js verzi 12.18.1
 
 ```bash
-# install dependencies
+# Instalace dependencí
 $ yarn install
 
-# serve with hot reload at localhost:3000
+# Developerská verze s hot reloadem na localhost:3000
 $ yarn dev
 
-# build for production and launch server
+# Build pro produkci a její následné spuštění na serveru
 $ yarn build
 $ yarn start
 
-# generate static project
+# Vygenerovat statické stránky webu, přicházíte o možnost SSR
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+Pro více informací, jak věci fungují se podívejte na [Nuxt.js dokumentaci](https://nuxtjs.org).
