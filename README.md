@@ -2,6 +2,7 @@
 ## Build Setup
 
 Mějte prosím na paměti, že pro spuštění potřebujete Node.js verzi 12.18.1
+Pro switchování Node verzí doporučuji používat nvm
 
 ```bash
 # Instalace dependencí
